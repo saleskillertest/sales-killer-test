@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Killer Test</title>
+<meta name="theme-color" content="#171915">
+<meta property="og:title" content="Sales Killer Test">
+<meta property="og:description" content="20 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Scopri il tuo profilo comunicativo tra Rosso, Giallo, Verde e Blu, con analisi del tuo stile, guida per il sales manager e piano d'azione per chiudere di più. 5 minuti.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sales Killer Test">
+<meta name="twitter:description" content="20 situazioni reali di vendita. Scopri il tuo profilo tra Rosso, Giallo, Verde e Blu e come chiudere di più. 5 minuti.">
+<meta name="description" content="Test sullo stile di vendita basato sui 4 colori: 20 scenari reali di trattativa, profilo dominante, guida per il sales manager e piano d'azione formativo.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
+  :root{
+    --bg:#12140F; --panel:#1A1D16; --panel2:#20241B; --edge:#2C3125; --txt:#F4F5F0; --dim:#8F958A;
+    --rosso:#E0453C; --giallo:#E9A227; --verde:#3FA46A; --blu:#4478E0;
+    --serif:"Instrument Serif",Georgia,serif;
+    --sans:"Inter",-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);background:var(--bg);color:var(--txt);min-height:100dvh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(900px 500px at 15% -10%, rgba(224,69,60,.10), transparent 60%),
+               radial-gradient(700px 450px at 90% 5%, rgba(68,120,224,.10), transparent 60%)}
+  .colorbar{display:flex;height:3px;position:sticky;top:0;z-index:9;background:var(--edge)}
+  .colorbar i{transition:flex .45s cubic-bezier(.2,.8,.2,1)}
+  .cb-r{background:var(--rosso)} .cb-g{background:var(--giallo)}
+  .cb-v{background:var(--verde)} .cb-b{background:var(--blu)}
+  .cb-rest{background:var(--edge)}
+  .wrap{display:flex;justify-content:center;padding:40px 22px 22px;position:relative;z-index:1}
+  .card{width:100%;max-width:640px}
+  .fade{animation:fade .35s cubic-bezier(.2,.8,.2,1)}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);
+    border:1px solid var(--edge);border-radius:100px;padding:7px 14px;margin-bottom:30px}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--rosso);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{font-family:var(--serif);font-size:clamp(42px,11vw,68px);line-height:1;font-weight:400;letter-spacing:-.02em}
+  h1 .soft{color:var(--dim);font-style:italic}
+  .lede{color:var(--dim);font-size:17px;line-height:1.65;margin-top:24px;max-width:33em}
+  .stats{display:flex;gap:0;margin-top:38px;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge)}
+  .stat{flex:1;padding:22px 16px;border-right:1px solid var(--edge)}
+  .stat:first-child{padding-left:0}
+  .stat:last-child{padding-right:0}
+  .stat:last-child{border-right:none}
+  .stat b{display:block;font-family:var(--serif);font-size:36px;font-weight:400;line-height:1}
+  .stat span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-top:9px}
+
+  .qhead{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .qnum{font-family:var(--serif);font-size:34px;line-height:1;color:var(--dim)}
+  .qtot{font-size:11.5px;letter-spacing:.16em;color:var(--dim);text-transform:uppercase}
+  h2{font-family:var(--serif);font-size:clamp(26px,6.5vw,36px);line-height:1.16;font-weight:400;letter-spacing:-.01em}
+  .opts{display:flex;flex-direction:column;gap:9px;margin-top:26px}
+  .opt{position:relative;text-align:left;font:inherit;font-size:16px;line-height:1.5;padding:17px 18px 17px 20px;
+    border:1px solid var(--edge);border-radius:14px;background:var(--panel);color:var(--txt);cursor:pointer;
+    transition:border-color .16s,background .16s,transform .1s}
+  .opt::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:3px;background:transparent;transition:background .16s}
+  .opt:hover{border-color:#454B3D;background:var(--panel2)}
+  .opt:active{transform:scale(.995)}
+  .opt.sel{border-color:var(--txt);background:var(--panel2)}
+  .opt.sel::before{background:var(--txt)}
+  .opt:focus-visible{outline:2px solid var(--txt);outline-offset:2px}
+
+  input[type=text]{width:100%;font:inherit;font-size:17px;padding:16px 18px;border:1px solid var(--edge);border-radius:13px;background:var(--panel);color:var(--txt);outline:none;margin-top:30px;transition:border-color .16s}
+  input::placeholder{color:#666C60}
+  input:focus{border-color:var(--txt)}
+
+  .nav{position:relative;background:transparent;padding:4px 22px 40px;display:flex;justify-content:center;z-index:1}
+  .navin{width:100%;max-width:640px;display:flex;gap:10px}
+  .btn{font:inherit;font-size:16.5px;font-weight:600;padding:17px 28px;border-radius:13px;border:none;cursor:pointer;background:var(--txt);color:var(--bg);flex:1;transition:opacity .15s,transform .1s}
+  .btn:active{transform:scale(.99)}
+  .btn.ghost{background:transparent;color:var(--dim);flex:0 0 auto;border:1px solid var(--edge)}
+  .err{color:var(--rosso);font-size:14px;margin-top:16px;display:none}
+
+  .gate{text-align:center;padding-top:24px}
+  .lockmix{display:flex;gap:5px;justify-content:center;margin-bottom:30px}
+  .lockmix i{width:38px;height:6px;border-radius:3px;opacity:.4;animation:rise .5s backwards}
+  .lockmix i:nth-child(2){animation-delay:.08s}.lockmix i:nth-child(3){animation-delay:.16s}.lockmix i:nth-child(4){animation-delay:.24s}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:.4;transform:none}}
+  .gate h2{margin-bottom:16px}
+  .gate p{color:var(--dim);font-size:16px;line-height:1.65;max-width:30em;margin:0 auto}
+  .gatebtns{display:flex;flex-direction:column;gap:11px;margin-top:34px}
+  .gbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-size:16.5px;font-weight:600;padding:18px;border-radius:13px;border:none;cursor:pointer;color:#fff;transition:filter .15s,transform .1s}
+  .gbtn:hover{filter:brightness(1.08)} .gbtn:active{transform:scale(.99)}
+  .gwa{background:var(--verde)} .gmail{background:var(--blu)}
+  .gnote{font-size:13px;color:var(--dim);margin-top:22px;line-height:1.55;max-width:28em;margin-left:auto;margin-right:auto}
+
+  .dom{position:relative;border-radius:20px;padding:32px 26px;color:#fff;overflow:hidden}
+  .dom::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.10)}
+  .dom .l{font-size:11px;font-weight:600;letter-spacing:.2em;opacity:.9;position:relative}
+  .dom .n{font-family:var(--serif);font-size:clamp(38px,10vw,56px);font-weight:400;letter-spacing:-.02em;line-height:1;margin-top:12px;position:relative}
+  .dom .s{font-size:15px;margin-top:14px;opacity:.95;position:relative;line-height:1.5}
+  .mix{margin:26px 0 6px}
+  .mixrow{display:flex;align-items:center;gap:13px;margin-bottom:10px}
+  .mixrow .tag{width:60px;font-size:11px;font-weight:700;letter-spacing:.1em}
+  .mixrow .track{display:block;flex:1;height:10px;background:var(--edge);border-radius:5px;overflow:hidden}
+  .mixrow .fill{display:block;height:10px;min-width:3px;border-radius:5px;animation:grow .7s cubic-bezier(.2,.8,.2,1) backwards}
+  @keyframes grow{from{width:0!important}}
+  .mixrow .pct{width:44px;text-align:right;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+  .sect{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:22px;margin-top:12px}
+  .sect h3{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--dim);margin-bottom:13px}
+  .sect p{font-size:15.5px;line-height:1.68}
+  .acts{display:flex;flex-direction:column;gap:9px;margin-top:22px}
+  .abtn{display:flex;align-items:center;justify-content:center;gap:9px;font:inherit;font-size:16px;font-weight:600;padding:16px;border-radius:13px;border:1px solid var(--edge);cursor:pointer;background:var(--panel2);color:var(--txt);transition:filter .15s,transform .1s}
+  .abtn:hover{filter:brightness(1.15)} .abtn:active{transform:scale(.99)}
+  .abtn.pdf{background:var(--txt);color:var(--bg);border-color:var(--txt)}
+  .abtn.wa{background:var(--verde);color:#fff;border-color:var(--verde)}
+  .abtn.mail{background:var(--blu);color:#fff;border-color:var(--blu)}
+  .printonly{display:none}
+  .sent{background:var(--panel);border:1px solid var(--edge);border-left:3px solid var(--verde);border-radius:13px;padding:17px 18px;font-size:14.5px;color:var(--dim);margin-top:20px;line-height:1.55}
+
+  /* ============ STAMPA / PDF ============ */
+  @media print{
+    @page{size:A4;margin:16mm 14mm}
+    body{background:#fff!important;color:#14161A!important;display:block}
+    body::before{display:none!important}
+    .colorbar,.nav,.acts,.sent,.gate{display:none!important}
+    .wrap{padding:0!important;display:block}
+    .card{max-width:none!important;padding:0!important}
+    .fade{animation:none!important}
+    .printonly{display:block!important}
+    .printonly.phead{display:flex!important}
+    .phead{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid #D8D4CC;padding-bottom:10px;margin-bottom:26px}
+    .phead .pl{font-size:10px;font-weight:700;letter-spacing:.22em;color:#6B7280}
+    .phead .pr{font-size:10px;font-weight:700;letter-spacing:.16em;border:1px solid #14161A;border-radius:4px;padding:7px 11px}
+    .dom{background:none!important;color:#14161A!important;padding:0!important;border-radius:0!important;margin-bottom:30px}
+    .dom::after{display:none!important}
+    .dom .l{color:#8A8F86!important;font-size:10px;letter-spacing:.22em;margin-bottom:14px}
+    .dom .n{font-family:var(--sans)!important;font-weight:800!important;font-size:52px!important;line-height:.95!important;color:#B9BDB4!important;letter-spacing:-.03em}
+    .dom .s{color:#6B7280!important;font-size:13.5px!important;margin-top:14px!important}
+    .mix{border:1px solid #D8D4CC;border-radius:8px;padding:20px 22px;margin:0 0 22px}
+    .mix::before{content:"LA TUA COMPOSIZIONE";display:block;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px;color:#14161A}
+    .mixrow{gap:0;margin-bottom:11px}
+    .mixrow .tag{width:auto;flex:1;font-size:12px;font-weight:800;letter-spacing:.1em}
+    .mixrow .track{display:none!important}
+    .mixrow .pct{width:auto;font-size:13.5px;font-weight:800;color:#14161A}
+    .sect{background:none!important;border:1px solid #D8D4CC!important;border-radius:8px!important;padding:20px 22px!important;margin-top:14px!important;break-inside:avoid}
+    .sect h3{color:#14161A!important;font-size:12px!important;font-weight:800!important;letter-spacing:.1em!important;margin-bottom:12px!important}
+    .sect p{color:#31343A!important;font-size:12.5px!important;line-height:1.7!important}
+    .pfoot{display:block;text-align:center;font-size:10.5px;color:#8A8F86;margin-top:20px}
+  }
+</style>
+</head>
+<body>
+<script>
+  const WHATSAPP = "393515242162";
+  // I pulsanti manuali scrivono SOLO a Rocco: la mail parte dalla casella del venditore,
+  // quindi qualsiasi altro destinatario sarebbe visibile a lui. La copia ad Alessandro
+  // arriva dall'invio automatico (Apps Script), in Ccn, dove resta invisibile.
+  const EMAIL_TO = "roccorestapro@gmail.com";
+  // Incolla qui l'URL dello script Google (vedi ISTRUZIONI-DASHBOARD.md).
+  // Finché è vuoto, l'invio automatico è disattivato e restano i pulsanti manuali.
+  const ENDPOINT = "https://script.google.com/macros/s/AKfycbwjTeyc-UQvn-CH7_WeyKCxui4VXeE2mlP7C3Odn_0Sewp1l9qIVtbUd6f15_TVCezHpA/exec";
+</script>
+<div class="colorbar" id="cbar"><i class="cb-rest" style="flex:1"></i></div>
+<div class="wrap"><div class="card" id="app"></div></div>
+<div class="nav"><div class="navin">
+  <button class="btn ghost" id="back" style="visibility:hidden">Indietro</button>
+  <button class="btn" id="next">Inizia il test</button>
+</div></div>
+<script>
+const QUESTIONS = [
+ {q:"Chiamata a freddo: come apri i primi 20 secondi?", o:[
+  {c:"R",t:"Dritto al punto: chi sono, che risultato porto, quanto tempo mi serve."},
+  {c:"G",t:"Rompo il ghiaccio con energia: creo subito sintonia e un po' di curiosità."},
+  {c:"V",t:"Mi presento con calma e chiedo se è un buon momento per parlare."},
+  {c:"B",t:"Apro con un riferimento preciso alla sua azienda: dimostro che ho studiato."}]},
+ {q:"Il cliente dice: \u201Ccosta troppo\u201D. Prima mossa?", o:[
+  {c:"R",t:"Ribalto: quanto gli costa NON risolvere il problema? Torno sul risultato."},
+  {c:"G",t:"Sdrammatizzo e racconto di un cliente simile che oggi è felicissimo."},
+  {c:"V",t:"Chiedo cosa lo preoccupa esattamente del prezzo e cerco di rassicurarlo."},
+  {c:"B",t:"Scompongo il prezzo: ROI, voci di costo, confronto numeri alla mano."}]},
+ {q:"Trattativa importante domani. Come la prepari?", o:[
+  {c:"R",t:"Definisco l'obiettivo di chiusura e il percorso più corto per arrivarci."},
+  {c:"G",t:"Penso a come creare il clima giusto: le trattative si vincono di pancia."},
+  {c:"V",t:"Preparo le domande per capire a fondo cosa serve davvero al cliente."},
+  {c:"B",t:"Dossier completo: dati, casi, listino, risposte alle possibili obiezioni."}]},
+ {q:"\u201CCi devo pensare.\u201D Tu cosa fai?", o:[
+  {c:"R",t:"Chiedo diretto: cosa le manca per decidere oggi?"},
+  {c:"G",t:"Tengo caldo l'entusiasmo e fisso subito un richiamo a breve."},
+  {c:"V",t:"Rispetto i suoi tempi e mi rendo disponibile per ogni dubbio."},
+  {c:"B",t:"Invio un riepilogo scritto con i punti chiave per aiutarlo a valutare."}]},
+ {q:"Il tuo vero punto di forza al telefono:", o:[
+  {c:"R",t:"La determinazione: porto la chiamata verso la chiusura."},
+  {c:"G",t:"L'entusiasmo: dopo due minuti il cliente è coinvolto."},
+  {c:"V",t:"L'ascolto: le persone si fidano e si aprono."},
+  {c:"B",t:"La precisione: ho sempre la risposta esatta."}]},
+ {q:"Presentazione del prodotto o servizio:", o:[
+  {c:"R",t:"Tre benefici forti e una call to action. Il resto è rumore."},
+  {c:"G",t:"Storie e casi concreti: faccio vivere il risultato al cliente."},
+  {c:"V",t:"La costruisco sulle esigenze emerse e verifico spesso che mi segua."},
+  {c:"B",t:"Struttura logica: caratteristiche, prove, dettagli in ordine."}]},
+ {q:"Cliente aggressivo che ti attacca su prezzo e tempi:", o:[
+  {c:"R",t:"Tengo il punto e rispondo colpo su colpo, con rispetto ma deciso."},
+  {c:"G",t:"Alleggerisco la tensione e riporto il clima sul positivo."},
+  {c:"V",t:"Resto calmo, riconosco il suo fastidio e lo lascio sfogare prima di rispondere."},
+  {c:"B",t:"Non entro nell'emotività: rispondo sui fatti, punto per punto."}]},
+ {q:"Fine mese, target a rischio. Che fai?", o:[
+  {c:"R",t:"Alzo il volume: più chiamate, più visite, spingo ogni chiusura possibile."},
+  {c:"G",t:"Riattivo la rete: clienti, conoscenze, referenze. Qualcosa esce sempre."},
+  {c:"V",t:"Mi concentro sui clienti già caldi, senza forzare chi non è pronto."},
+  {c:"B",t:"Analizzo la pipeline e lavoro solo le trattative con probabilità più alta."}]},
+ {q:"Hai fatto la proposta. Il cliente resta in silenzio.", o:[
+  {c:"R",t:"Rompo io il silenzio: \u201CProcediamo?\u201D"},
+  {c:"G",t:"Riempio la pausa con un commento positivo per riaccendere il dialogo."},
+  {c:"V",t:"Lascio lo spazio: il silenzio è suo, non lo presso."},
+  {c:"B",t:"Ricapitolo i punti della proposta per aiutarlo a valutare."}]},
+ {q:"Follow-up dopo il primo appuntamento:", o:[
+  {c:"R",t:"Entro 24 ore, con una proposta concreta e una data di decisione."},
+  {c:"G",t:"Messaggio caloroso che tiene vivo il rapporto e l'entusiasmo."},
+  {c:"V",t:"Ringrazio, resto a disposizione, senza mettere fretta."},
+  {c:"B",t:"Email riepilogativa: cosa ci siamo detti, dettagli, prossimi passi."}]},
+ {q:"Il concorrente costa meno. Il cliente te lo dice.", o:[
+  {c:"R",t:"Sposto sul valore e sfido il confronto: il risultato vale più del prezzo."},
+  {c:"G",t:"Punto sul rapporto e sull'esperienza: con me non compra un prezzo."},
+  {c:"V",t:"Chiedo cosa lo attira dell'altra offerta: capisco prima di controbattere."},
+  {c:"B",t:"Preparo un confronto oggettivo, voce per voce."}]},
+ {q:"Le tue note nel CRM dopo le chiamate:", o:[
+  {c:"R",t:"Essenziali: esito e prossimo passo. Il tempo va speso a vendere."},
+  {c:"G",t:"Poche: le cose importanti me le ricordo, i sistemi mi stanno stretti."},
+  {c:"V",t:"Annoto anche i dettagli personali: servono a coltivare la relazione."},
+  {c:"B",t:"Complete e aggiornate: ogni informazione può decidere una trattativa."}]},
+ {q:"Cliente indeciso tra due opzioni:", o:[
+  {c:"R",t:"Gli consiglio io la scelta migliore e chiudo su quella."},
+  {c:"G",t:"Gli faccio immaginare la sua situazione dopo l'acquisto."},
+  {c:"V",t:"Faccio domande finché capisco quale lo farebbe sentire più sereno."},
+  {c:"B",t:"Metto in fila pro e contro oggettivi di entrambe."}]},
+ {q:"Come vivi un \u201Cno\u201D secco?", o:[
+  {c:"R",t:"Mi carica: statisticamente il prossimo è più vicino al sì."},
+  {c:"G",t:"Ci resto male cinque minuti, poi torno su come prima."},
+  {c:"V",t:"Mi chiedo se ho pressato troppo o mancato qualcosa nel rapporto."},
+  {c:"B",t:"Analizzo la trattativa: dove esattamente l'ho persa?"}]},
+ {q:"La leva persuasiva che usi di più:", o:[
+  {c:"R",t:"Urgenza e risultato: perché conviene decidere ora."},
+  {c:"G",t:"Emozione e prova sociale: gli altri l'hanno fatto e sono felici."},
+  {c:"V",t:"Fiducia e rassicurazione: nessun rischio, ci sono io."},
+  {c:"B",t:"Dati e dimostrazioni: i numeri non mentono."}]},
+ {q:"In riunione vendite tu sei quello che:", o:[
+  {c:"R",t:"Parla di numeri da battere e di come batterli."},
+  {c:"G",t:"Tira su la squadra quando l'energia cala."},
+  {c:"V",t:"Ascolta tutti e smussa le tensioni."},
+  {c:"B",t:"Porta l'analisi: cosa dicono davvero i dati."}]},
+ {q:"Upsell a un cliente esistente:", o:[
+  {c:"R",t:"Appena vedo l'opportunità propongo l'upgrade, senza girarci intorno."},
+  {c:"G",t:"Gli racconto lo scenario nuovo: cosa potrebbe diventare."},
+  {c:"V",t:"Solo se sento che gli serve davvero: la fiducia vale più della vendita."},
+  {c:"B",t:"Gli dimostro con i suoi stessi dati che l'upgrade conviene."}]},
+ {q:"Primo minuto di una call conoscitiva fissata:", o:[
+  {c:"R",t:"Agenda subito chiara: obiettivo, tempi, decisione attesa."},
+  {c:"G",t:"Due minuti di chiacchiera vera: prima le persone, poi il business."},
+  {c:"V",t:"Una domanda aperta e ascolto: la call è sua, non mia."},
+  {c:"B",t:"Inquadro il contesto e seguo la scaletta di domande che ho preparato."}]},
+ {q:"Obiezione tecnica a cui non sai rispondere al volo:", o:[
+  {c:"R",t:"Non mi blocco: torno sul beneficio principale, i dettagli li vediamo dopo."},
+  {c:"G",t:"La giro con leggerezza e prometto la risposta in giornata."},
+  {c:"V",t:"Ammetto con onestà che preferisco verificare, e lo faccio."},
+  {c:"B",t:"Prendo nota precisa e invio risposta documentata per iscritto."}]},
+ {q:"Quando chiedi l'ordine?", o:[
+  {c:"R",t:"Al primo segnale d'acquisto: chi aspetta perde."},
+  {c:"G",t:"Quando sento che l'atmosfera è al punto giusto."},
+  {c:"V",t:"Quando percepisco che il cliente si sente pronto."},
+  {c:"B",t:"Dopo aver risposto a tutte le domande sul tavolo."}]}
+];
+const COLORS={R:{name:"ROSSO",hex:"#E0453C",tag:"Dominante"},G:{name:"GIALLO",hex:"#E9A227",tag:"Espressivo"},V:{name:"VERDE",hex:"#3FA46A",tag:"Cooperativo"},B:{name:"BLU",hex:"#4478E0",tag:"Analitico"}};
+const REPORTS={
+ R:{stile:"Comunicatore diretto e orientato al risultato. Al telefono va dritto al punto: poco riscaldamento, ritmo alto, domande che portano a una decisione. Le sue leve naturali sono urgenza, risultato e sfida; le obiezioni le affronta frontalmente, spesso ribaltandole sul costo del non agire. Chiude presto e chiede l'ordine senza esitazioni. Il rovescio della medaglia: può ascoltare poco, saltare la fase di scoperta e mettere pressione a clienti che avevano solo bisogno di un passaggio in più, bruciando trattative che erano vive.",
+   manager:"Comunicagli in modo diretto e sintetico: niente giri di parole, niente micro-gestione. Dagli obiettivi sfidanti, classifiche e gare: si accende con la competizione e con incentivi legati alla performance. Riconoscigli i risultati in modo esplicito. Nei confronti evita lo scontro di potere frontale: presenta i fatti e lascia che la decisione sembri anche sua. Se devi correggerlo, fallo su numeri e comportamenti specifici, mai sulla persona.",
+   piano:"È già il profilo di chiusura: il piano è di affinamento, non di trasformazione. 1) Ascolto attivo: nelle prossime 20 chiamate, due domande di scoperta in più prima di proporre. 2) Regola del respiro: dopo l'obiezione, una pausa e una riformulazione prima di controbattere. 3) Trattative lunghe: coltivare i cicli complessi senza forzare la chiusura al primo contatto. 4) Riascoltare una chiamata a settimana contando quanto parla lui rispetto al cliente: obiettivo sotto il 50%."},
+ G:{stile:"Comunicatore espressivo e relazionale. Al telefono è caldo, coinvolgente, trascinante: crea sintonia in pochi minuti e usa storie e casi concreti come leva principale, insieme all'emozione e alla prova sociale. Le obiezioni le smonta con leggerezza e ottimismo. Il rovescio della medaglia: può disperdersi nella conversazione, perdere la struttura della trattativa, trascurare follow-up e CRM, e arrivare a fine chiamata con un ottimo clima ma senza una chiusura o un prossimo passo definito.",
+   manager:"Motivalo con riconoscimento visibile: complimenti davanti al team, premi, gare con celebrazione. Comunicagli con energia: un manager piatto lo spegne. Il suo punto debole è la struttura, non la motivazione: aiutalo con processi semplici e non negoziabili (CRM aggiornato, follow-up calendarizzati) presentandoli come strumenti per vincere, non come burocrazia. Nelle riunioni dagli spazio per parlare, ma chiudi sempre tu con azioni concrete e scadenze.",
+   piano:"Obiettivo: incanalare l'energia verso la chiusura. 1) Ogni chiamata parte con un obiettivo scritto: che decisione voglio ottenere oggi? 2) Script di chiusura fisso: tre formule per chiedere l'ordine, da usare a ogni trattativa matura. L'entusiasmo apre, la domanda chiude. 3) Disciplina dei numeri: monitorare conversione e tentativi di chiusura a settimana, non solo relazioni avviate. 4) Follow-up entro 24 ore, sempre, con proposta e data. 5) Allenare la tolleranza al momento di tensione: chiedere e stare in silenzio."},
+ V:{stile:"Comunicatore empatico e cooperativo. Al telefono ha tono calmo, ascolta davvero, fa domande e costruisce una fiducia che dura: i clienti si aprono con lui e restano. Le sue leve sono rassicurazione, presenza e assenza di rischio; le obiezioni le accoglie prima di rispondere. Il rovescio della medaglia: evita il conflitto e la pressione, quindi rimanda la richiesta d'ordine, concede troppo facilmente sul prezzo e può accompagnare a lungo trattative che non decide mai di chiudere.",
+   manager:"Comunicagli con calma e in privato: la pressione pubblica lo blocca, la sicurezza lo sblocca. Dagli stabilità, feedback costruttivo e obiettivi graduali; riconosci la qualità della relazione che costruisce, perché è reale valore commerciale. Non chiedergli di essere più aggressivo: dagli invece un metodo di chiusura passo-passo da seguire, e affiancalo nei role-play. Incentivi: più efficaci quelli legati alla continuità e al team che le gare individuali spinte.",
+   piano:"Obiettivo: trasformare la fiducia che crea in decisioni. 1) Reframe: chiudere non è forzare, è aiutare il cliente a decidere. Lasciarlo nell'indecisione non è gentilezza. 2) Una frase di chiusura pronta e provata ad alta voce, da usare a ogni trattativa matura. 3) Allenare il silenzio dopo la richiesta: chiedere l'ordine e non riempire la pausa. 4) Role-play settimanale sull'obiezione prezzo: tenere il punto senza concedere subito. 5) KPI personale: numero di richieste d'ordine fatte a settimana."},
+ B:{stile:"Comunicatore analitico e strutturato. Al telefono è preparato, preciso, credibile: conosce il prodotto meglio di chiunque, segue una scaletta, risponde alle obiezioni con dati, confronti e documentazione. Le sue leve sono numeri, prove e logica. Il rovescio della medaglia: può diventare troppo tecnico e perdere il cliente nei dettagli, aspettare di avere tutte le informazioni prima di spingere, e non chiedere mai davvero l'ordine perché la trattativa non gli sembra mai perfettamente matura.",
+   manager:"Comunicagli con fatti, non con slogan motivazionali: vuole capire il perché delle richieste. Dagli tempo di preparazione e dati di qualità; feedback specifico e documentato, mai generico. Non forzarlo a improvvisare in pubblico. Fissagli scadenze decisionali esplicite, perché la sua tendenza è rimandare in nome dell'analisi. Incentivi: obiettivi chiari e misurabili, con regole del gioco trasparenti.",
+   piano:"Obiettivo: passare dall'analisi all'azione. 1) Regola dei 3 benefici: ogni presentazione parte da tre benefici in linguaggio semplice, i dettagli tecnici solo se richiesti. 2) Deadline di chiusura: ogni trattativa ha una data entro cui chiedere l'ordine, anche con informazioni incomplete. L'80% di preparazione basta. 3) Call to action obbligatoria: nessuna chiamata o email si chiude senza un prossimo passo con data. 4) Allenare l'urgenza: dare al cliente una ragione vera per decidere ora. 5) Accettare il rifiuto come dato: un no veloce vale più di un forse eterno."}};
+
+let step=-1, userName="", unlocked=false, sentVia='';
+const answers=new Array(QUESTIONS.length).fill(null);
+const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,o};});
+const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
+function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+function counts(){const c={R:0,G:0,V:0,B:0};answers.forEach(a=>{if(a)c[a]++});return c}
+function ranking(){const c=counts(),t=QUESTIONS.length;const a=Object.keys(c).map(k=>({k,n:c[k],p:Math.round(c[k]/t*100)}));a.sort((x,y)=>y.n-x.n);return a}
+function updateBar(){const c=counts(),d=answers.filter(Boolean).length,t=QUESTIONS.length;
+  cbar.innerHTML=`<i class="cb-r" style="flex:${c.R}"></i><i class="cb-g" style="flex:${c.G}"></i><i class="cb-v" style="flex:${c.V}"></i><i class="cb-b" style="flex:${c.B}"></i><i class="cb-rest" style="flex:${t-d}"></i>`}
+
+function render(){
+  if(step>QUESTIONS.length) step=QUESTIONS.length;   // niente indici fuori range
+  if(step<-1) step=-1;
+  updateBar();
+  back.style.visibility=step<=-1?'hidden':'visible';
+  nav.style.display='flex';
+  if(step===-1){
+    next.textContent='Inizia il test';
+    app.innerHTML=`<div class="fade"><div class="eyebrow"><span class="dot"></span>Assessment comportamentale</div>
+      <h1>Non vendi male.<br><span class="soft">Vendi a modo tuo.</span></h1>
+      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe.</p>
+      <div class="stats">
+        <div class="stat"><b>20</b><span>scenari reali</span></div>
+        <div class="stat"><b>4</b><span>stili</span></div>
+        <div class="stat"><b>5'</b><span>durata</span></div>
+      </div>
+      <input type="text" id="uname" placeholder="Nome e cognome" value="${esc(userName)}">
+      <p class="err" id="err">Scrivi il tuo nome per iniziare.</p></div>`;
+    return;
+  }
+  if(step===QUESTIONS.length){ unlocked?renderReport():renderGate(); return; }
+  const q=shuffled[step];
+  next.textContent=step===QUESTIONS.length-1?'Vedi il risultato':'Avanti';
+  app.innerHTML=`<div class="fade">
+    <div class="qhead"><span class="qnum">${String(step+1).padStart(2,'0')}</span><span class="qtot">di ${QUESTIONS.length}</span></div>
+    <h2>${esc(q.q)}</h2>
+    <div class="opts">${q.o.map(o=>`<button type="button" class="opt ${answers[step]===o.c?'sel':''}" data-c="${o.c}" onclick="choose(this)">${esc(o.t)}</button>`).join('')}</div>
+    <p class="err" id="err">Scegli una risposta per continuare.</p></div>`;
+  window.scrollTo({top:0});
+}
+function choose(el){answers[step]=el.dataset.c;document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');updateBar();setTimeout(()=>{step++;render()},170)}
+
+function renderGate(){
+  nav.style.display='none';
+  app.innerHTML=`<div class="gate fade">
+    <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
+    <h2>Il tuo profilo è pronto.</h2>
+    <p>Per sbloccare il risultato completo, invia il test compilato. Scegli come: ricevi subito a schermo il profilo con analisi, guida per il manager e piano d'azione.</p>
+    <div class="gatebtns">
+      <button class="gbtn gwa" onclick="unlock('wa')">Invia su WhatsApp e sblocca</button>
+      <button class="gbtn gmail" onclick="unlock('mail')">Invia via email e sblocca</button>
+    </div>
+    <p class="gnote">Vengono inviati il test completo con tutte le tue risposte e il report finale.</p>
+  </div>`;
+  window.scrollTo({top:0});
+}
+function openLink(href){
+  // apre in una nuova scheda senza far navigare via la pagina del test
+  const a=document.createElement('a');
+  a.href=href; a.target='_blank'; a.rel='noopener';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function linkFor(via){
+  const payload=fullReport(), subj='Sales Killer Test - '+userName;
+  if(via==='wa')   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(payload)}`;
+  if(via==='mail') // compositore Gmail: si apre nel browser, non serve un'app di posta
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_TO)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(payload)}`;
+  return `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(payload)}`; // 'app'
+}
+let autoSent=false;
+function payload(){
+  const rk=ranking(), dom=rk[0];
+  return {
+    nome:userName,
+    profilo:`${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
+    mix:rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | '),
+    risposte:shuffled.map((q,i)=>{const c=answers[i],o=c?q.o.find(x=>x.c===c):null;
+      return `${i+1}. ${q.q} -> [${c?COLORS[c].name:'-'}] ${o?o.t:'-'}`}).join('\n'),
+    report:fullReport()
+  };
+}
+function autoSave(){                       // invio automatico: foglio Google + email
+  if(autoSent) return;
+  autoSent=true;
+  // pagina servita dal web app di Apps Script: chiamata diretta, con esito reale
+  if(window.google && google.script && google.script.run){
+    google.script.run.withSuccessHandler(()=>mark(true)).withFailureHandler(()=>mark(false)).salvaRisultato(payload());
+    return;
+  }
+  // file aperto in locale: serve l'URL dello script
+  if(!ENDPOINT){ mark(null); return; }
+  fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(payload()).toString()})
+    .then(()=>mark(ENDPOINT?'inviato':false)).catch(()=>mark(false));
+}
+function mark(ok){
+  const el=document.getElementById('autostat');
+  if(!el) return;
+  if(ok===null){ el.textContent='Invia il tuo risultato con uno dei pulsanti qui sotto.'; return; }
+  if(ok==='inviato'){ el.textContent='Risultato inviato alla dashboard.'; return; }
+  el.textContent = ok
+    ? 'Risultato registrato sulla dashboard.'
+    : 'Invio automatico non riuscito: usa i pulsanti qui sotto.';
+}
+let sending=false;
+function send(via){
+  if(sending) return;               // evita doppie aperture
+  sending=true; setTimeout(()=>{sending=false},1200);
+  const href=linkFor(via);
+  let w=null;
+  try{ w=window.open(href,'_blank','noopener'); }catch(e){}
+  if(!w){ try{ openLink(href); }catch(_){} }   // se il popup è bloccato
+  markSend(via);
+}
+function markSend(via){                        // descrive solo ciò che è realmente accaduto
+  const el=document.getElementById('sendstat');
+  if(!el) return;
+  const dove = via==='wa' ? 'WhatsApp' : (via==='app' ? 'il tuo programma di posta' : 'il messaggio email');
+  el.innerHTML = `Si è aperto ${dove} con il report già compilato: controlla e premi invio per completare l'invio. Se non si è aperto niente, usa <b>Copia il report</b> e incolla il testo in un messaggio.`;
+}
+function unlock(via){
+  unlocked=true; sentVia=via; renderReport();   // il report appare comunque
+  autoSave();                                   // registrazione automatica
+  send(via);
+}
+function copyReport(btn){
+  const t=fullReport();
+  const done=()=>{btn.textContent='Report copiato';setTimeout(()=>btn.textContent='Copia il report',1800)};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t,done))}
+  else fallbackCopy(t,done);
+}
+function fallbackCopy(t,done){
+  const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove();
+}
+
+function renderReport(){
+  nav.style.display='none';
+  const rk=ranking(),dom=rk[0],sec=rk[1],D=COLORS[dom.k],S=COLORS[sec.k],R=REPORTS[dom.k];
+  const secLine=sec.p>=25?`Forte componente secondaria: ${S.name} (${sec.p}%).`:`Profilo nettamente definito.`;
+  app.innerHTML=`<div class="fade">
+    <div class="printonly phead"><span class="pl">ASSESSMENT COMPLETATO</span><span class="pr">REPORT PERSONALE</span></div>
+    <div class="dom" style="background:${D.hex}">
+      <div class="l">PROFILO DI ${esc(userName.toUpperCase())}</div>
+      <div class="n">PREDOMINANTE ${D.name}</div>
+      <div class="s">${D.tag} · ${dom.p}% · ${secLine}</div>
+    </div>
+    <div class="mix">${rk.map((r,i)=>`<div class="mixrow">
+      <span class="tag" style="color:${COLORS[r.k].hex}">${COLORS[r.k].name}</span>
+      <span class="track"><span class="fill" style="width:${r.p}%;background:${COLORS[r.k].hex};animation-delay:${i*.09}s"></span></span>
+      <span class="pct">${r.p}%</span></div>`).join('')}</div>
+    <div class="sect"><h3>01 / IL TUO STILE OGGI</h3><p>${R.stile}</p></div>
+    <div class="sect"><h3>02 / GUIDA PER IL MANAGER</h3><p>${R.manager}</p></div>
+    <div class="sect"><h3>03 / PIANO D'AZIONE</h3><p>${R.piano}</p></div>
+    <div class="printonly pfoot">Ogni invio contiene il test completo: risposte date e report finale.</div>
+    <div class="acts">
+      <button class="abtn pdf" onclick="window.print()">Scarica il report in PDF</button>
+      <button class="abtn wa" onclick="send('wa')">Invia su WhatsApp</button>
+      <button class="abtn mail" onclick="send('mail')">Invia via email (Gmail)</button>
+      <button class="abtn" onclick="send('app')">Invia con la mia app di posta</button>
+      <button class="abtn" onclick="copyReport(this)">Copia il report</button>
+    </div>
+    <div class="sent"><span id="autostat">Invio del risultato in corso…</span><br><br><span id="sendstat"></span></div>
+    </div>`;
+  window.scrollTo({top:0});
+}
+
+function fullReport(){
+  const rk=ranking(),dom=rk[0],R=REPORTS[dom.k];
+  const L=["SALES KILLER TEST","--------------------",`Venditore: ${userName}`,
+    `Profilo dominante: ${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
+    `Mix: ${rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | ')}`,"",
+    "RISPOSTE DATE","--------------------"];
+  shuffled.forEach((q,i)=>{
+    const c=answers[i];
+    const opt=c?q.o.find(o=>o.c===c):null;
+    L.push(`${i+1}. ${q.q}`);
+    L.push(c&&opt?`   -> [${COLORS[c].name}] ${opt.t}`:`   -> (nessuna risposta)`);
+  });
+  L.push("","REPORT","--------------------","",
+    "STILE COMUNICATIVO ATTUALE",R.stile,"",
+    "GUIDA PER IL SALES MANAGER",R.manager,"",
+    "PIANO D'AZIONE FORMATIVO",R.piano);
+  return L.join("\n");
+}
+
+function showErr(){const e=document.getElementById('err'); if(e) e.style.display='block';}
+next.onclick=()=>{
+  if(step>=QUESTIONS.length) return;              // sulla schermata finale il tasto non fa nulla
+  if(step===-1){
+    const f=document.getElementById('uname');
+    userName=f?f.value.trim():'';
+    if(!userName){showErr();return}
+    step=0;render();return}
+  if(!answers[step]){showErr();return}
+  step++;render();
+};
+back.onclick=()=>{
+  if(step>=QUESTIONS.length && unlocked) return;   // dal report non si torna indietro
+  if(step>-1){step--;render()}
+};
+render();
+</script>
+</body>
+</html>
