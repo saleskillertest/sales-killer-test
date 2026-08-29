@@ -7,20 +7,27 @@ sales manager e il piano d'azione.
 ## Come funziona
 
 `index.html` è una pagina statica autosufficiente: nessuna dipendenza, nessun
-build. A test completato chiama in POST lo script Google configurato in
-`ENDPOINT` (in alto nel file), che scrive una riga sul foglio dei risultati.
+build, nessun framework. A test completato invia i risultati in POST al web app
+Apps Script configurato in `ENDPOINT` (riga 159), che scrive una riga sul foglio.
 
-- Foglio risultati: `TEST VENDITORI - ROCCO`
+- Foglio risultati: **TEST VENDITORI - ROCCO**
 - Endpoint: web app Apps Script, distribuzione pubblica, esegue come il
-  proprietario del foglio.
+  proprietario del foglio. Già autorizzata e attiva.
 - Se `ENDPOINT` è vuoto l'invio automatico si disattiva e restano i pulsanti
   manuali (WhatsApp, Gmail, PDF, copia negli appunti).
 
-## File
+## Struttura
 
 | File | A cosa serve |
 |---|---|
-|  | il questionario: pagina statica da pubblicare |
-|  | web app che riceve i risultati e scrive sul foglio |
-|  | manifest del progetto (permessi dichiarati) |
-|  | setup del foglio e della distribuzione |
+| `index.html` | il questionario: pagina statica da pubblicare |
+| `apps-script/Codice.gs` | web app che riceve i risultati e scrive sul foglio |
+| `apps-script/appsscript.json` | manifest del progetto, permessi dichiarati |
+| `apps-script/ISTRUZIONI.md` | setup del foglio e della distribuzione |
+
+## Note
+
+Le email automatiche non partono dallo script: il permesso `script.send_mail`
+è classificato come sensibile da Google e su un'app non verificata fa scattare
+il blocco dell'autorizzazione. Le notifiche si impostano sul foglio, da
+*Strumenti → Impostazioni di notifica*, e ognuno imposta le proprie.
