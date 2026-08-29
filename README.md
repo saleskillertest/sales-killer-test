@@ -20,8 +20,7 @@ build. A test completato chiama in POST lo script Google configurato in
 
 | File | A cosa serve |
 |---|---|
-| `index.html` | il questionario, pagina da pubblicare |
-| `Codice-AppsScript.gs` | codice del web app che riceve i risultati |
-| `appsscript.json` | manifest del progetto Apps Script (permessi dichiarati) |
-| `Index.html` | variante servita da Apps Script — non usata da questo host |
-| `ISTRUZIONI-DASHBOARD.md` | setup del foglio e della distribuzione |
+|  | il questionario: pagina statica da pubblicare |
+|  | web app che riceve i risultati e scrive sul foglio |
+|  | manifest del progetto (permessi dichiarati) |
+|  | setup del foglio e della distribuzione |
