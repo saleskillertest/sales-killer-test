@@ -10,10 +10,10 @@ GitHub Pages                                          al web app Apps Script
 
 | Pezzo | Dove |
 |---|---|
-| Questionario | https://alessandrobrozzi1-ux.github.io/sales-killer-test/ |
+| Questionario | https://saleskillertest.github.io/sales-killer-test/ |
 | Dashboard | foglio `TEST VENDITORI - ROCCO`, schede **Riepilogo** e **Risultati** |
 | Codice raccolta dati | progetto Apps Script `Sales Killer Test`, agganciato al foglio |
-| Repo | https://github.com/alessandrobrozzi1-ux/sales-killer-test |
+| Repo | https://github.com/saleskillertest/sales-killer-test |
 
 ## Il foglio
 
