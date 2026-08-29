@@ -1,5 +1,7 @@
 # Sales Killer Test
 
+**In linea:** https://alessandrobrozzi1-ux.github.io/sales-killer-test/
+
 Questionario comportamentale in 20 scenari di vendita. Restituisce il profilo
 dominante (Rosso / Giallo / Verde / Blu), il mix percentuale, la guida per il
 sales manager e il piano d'azione.

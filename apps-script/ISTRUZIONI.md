@@ -1,88 +1,56 @@
-# Sales Killer Test — come è fatto e cosa manca
-
-Il questionario **è servito da Google Apps Script**. Non serve comprare un sito:
-il link `/exec` dello script è il link da mandare ai venditori.
+# Come è montato il Sales Killer Test
 
 ```
-venditore apre il link  ->  compila il test  ->  la pagina chiama salvaRisultato()
-                                              ->  riga sul foglio + email
+venditore apre il link  ->  compila 20 domande  ->  la pagina POSTa al web app
+GitHub Pages                                        Apps Script
+                                                        |
+                                                        v
+                                              riga sul foglio Google
 ```
 
-Vantaggi rispetto a ospitare il file altrove: nessun hosting, nessun problema di CORS,
-e la pagina riceve una **conferma reale** dal server invece di sperare che sia andata.
+- **Questionario:** https://alessandrobrozzi1-ux.github.io/sales-killer-test/
+- **Dashboard:** foglio `TEST VENDITORI - ROCCO`
+- **Endpoint:** progetto Apps Script `Sales Killer Test`, agganciato al foglio,
+  distribuito come app web pubblica.
 
----
+## Modificare il questionario
 
-## Pezzi in gioco
+Il file è `index.html` alla radice del repo. È una pagina statica: si modifica,
+si committa, si pusha, e GitHub Pages ripubblica da solo in un minuto.
+Non serve toccare Apps Script.
 
-| Cosa | Dove |
-|---|---|
-| Foglio (dashboard) | `TEST VENDITORI - ROCCO` — id `1N3utAzc2qdW4EzzGp-YxPB2crxPmitaLvBCCB8Z7eaE` |
-| Progetto script | `Sales Killer Test - raccolta risultati`, account `alessandrobrozzi1@gmail.com` |
-| `Code.gs` | copia locale in `Codice-AppsScript.gs` |
-| `Index.html` | copia locale in `SalesKillerTest-v3.html` (sul Desktop) |
+## Modificare la raccolta dati
 
-Le copie locali sono la fonte di verità: se modifichi il test, **ricopia il file nel
-progetto Apps Script** (file `Index.html`) e rifai una nuova versione della distribuzione.
+`apps-script/Codice.gs` è la copia del codice che gira su Google. Se lo cambi:
 
----
+1. incolla il nuovo codice nell'editor Apps Script del foglio
+   (*Estensioni → Apps Script*);
+2. **Distribuisci → Gestisci distribuzioni → matita → Versione: Nuova versione**.
+   Così l'URL resta lo stesso. Con *Nuova distribuzione* cambierebbe, e andrebbe
+   riportato in `index.html` alla riga dell'`ENDPOINT`.
 
-## PASSO MANCANTE — autorizzare e pubblicare
+## Le email
 
-1. Nell'editor Apps Script: **Distribuisci → Nuova distribuzione → App web**
-   - Esegui come: **Io**
-   - Chi ha accesso: **Chiunque** ← senza questo i venditori non aprono il link
-2. Compare **"Autorizza accesso"**: scegli l'account, poi *Avanzate* →
-   *Vai a Sales Killer Test - raccolta risultati (non sicuro)* → **Consenti**.
-   Google mostra l'avviso "app non verificata" perché lo script è tuo e non passa
-   dalla review pubblica: è normale.
-3. Copia l'**URL dell'app web** (finisce con `/exec`). Quello è il link del questionario.
+Lo script **non** manda email, ed è una scelta obbligata: il permesso
+`script.send_mail` è classificato sensibile da Google e su un'app non verificata
+fa scattare il blocco dell'autorizzazione ("This app is blocked"). Provato, non
+aggirabile su questo account.
 
-Verifica in 30 secondi: apri l'URL, compila il test, controlla che compaia una riga
-nel foglio. In alternativa, dall'editor seleziona la funzione `provaInvio` e premi
-**Esegui**: scrive una riga "PROVA" senza compilare nulla.
+Le notifiche si impostano sul foglio, e ognuno imposta le proprie:
+**Strumenti → Impostazioni di notifica → "Qualsiasi modifica" → "Email, subito"**.
+Rocco deve farlo dal suo account, aprendo il foglio.
 
----
+Il report completo resta comunque nella riga del foglio, e i pulsanti manuali del
+test (WhatsApp, Gmail, PDF, copia) mandano il testo integrale a Rocco.
 
-## Chi riceve cosa
+## Cose da sapere
 
-- **Foglio:** ogni riga è un venditore — data, nome, profilo dominante, mix percentuali,
-  tutte e 20 le risposte, report completo, più una colonna Note.
-- **Email automatica:** a `roccorestapro@gmail.com`, con `alessandrobrozzi1@gmail.com`
-  in **Ccn** (non compare fra i destinatari).
-- **Pulsanti manuali** (WhatsApp, Gmail, app di posta, PDF, copia): scrivono **solo a
-  Rocco**. Lì la mail parte dalla casella del venditore, quindi qualunque altro
-  destinatario — anche in Ccn — sarebbe visibile a lui.
-
-**Il foglio vede tutto anche se l'email non arriva.** La riga viene scritta prima
-dell'invio e l'email è dentro un `try`: se la posta fallisce (limite ~100 al giorno,
-errore Google) il risultato resta sul foglio e la colonna Note dice cosa è andato storto.
-
----
-
-## Due cose da sistemare
-
-1. **Il foglio è condiviso "chiunque con il link → editor".** Chiunque riceva il link
-   può cancellare i risultati. Mettilo su *Visualizzatore* o togli il link pubblico:
-   lo script continua a scrivere, perché scrive dall'account proprietario.
-2. **Il mittente delle email sarà `alessandrobrozzi1@gmail.com`**, perché è l'account
-   che pubblica lo script. Il Ccn nasconde il destinatario, non il mittente: Rocco ti
-   vedrà comunque nel campo "da". Per sparire davvero, il progetto va ricreato e
-   pubblicato dall'account di Rocco (o da un account neutro).
-
----
-
-## Se qualcosa non va
-
-- **Il link chiede il login o dà "non autorizzato":** *Chi ha accesso* non è su "Chiunque".
-  Rifai la distribuzione.
-- **Hai modificato il codice ma il link si comporta come prima:** serve
-  *Distribuisci → Gestisci distribuzioni → Modifica (matita) → Versione: Nuova versione*.
-  Senza questo resta attiva la versione vecchia.
-- **La pagina dice "Invio automatico non riuscito":** lo script ha risposto con un errore.
-  Guarda *Esecuzioni* nell'editor per il motivo esatto. Il report resta comunque a schermo
-  e i pulsanti manuali funzionano.
-- **PDF:** il pulsante usa la stampa del browser. Dentro Apps Script la pagina vive in un
-  iframe, quindi se la stampa esce storta usa *Copia il report*.
-- **Report via "app di posta":** i link `mailto:` con un testo lungo (~4.000 caratteri)
-  vengono troncati da alcuni client. Per quello ci sono WhatsApp, Gmail e *Copia il report*.
+- Il foglio è condiviso **"chiunque con il link → editor"**: chiunque abbia il
+  link può cancellare i risultati. Conviene metterlo su *Visualizzatore*; lo
+  script continua a scrivere perché scrive dall'account proprietario.
+- L'URL dell'endpoint è visibile nel codice della pagina, come in qualunque sito
+  statico. In teoria qualcuno potrebbe inviare righe finte al foglio: è il
+  compromesso di questa architettura, senza autenticazione.
+- Il perché di questo giro: HtmlService, cioè far servire la pagina ad Apps
+  Script, non funzionava (contenuto consegnato ma script mai eseguito
+  nell'iframe). Ospitare la pagina fuori risolve e costa zero.
