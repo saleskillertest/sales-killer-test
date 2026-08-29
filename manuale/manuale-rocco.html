@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Sales Killer Test — Manuale operativo</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  @page { size: A4; margin: 17mm 16mm 16mm; }
+
+  :root{
+    --ink:#14161A; --ink2:#3A3F47; --dim:#767C86; --hair:#DCD8D0;
+    --carta:#FFFFFF; --panno:#F6F4EF;
+    --rosso:#C93A31; --giallo:#B87D0A; --verde:#2E7D4F; --blu:#2F5BC4;
+    --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--carta);
+       font-size:10pt;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+  /* ---------- testata ---------- */
+  .testata{display:flex;justify-content:space-between;align-items:flex-end;
+           border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:18px}
+  .marchio{font-size:8pt;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  h1{font-family:var(--serif);font-size:27pt;line-height:1;font-weight:400;letter-spacing:-.01em;margin-top:6px}
+  .destinatario{text-align:right;font-size:8.5pt;color:var(--dim);line-height:1.5}
+  .destinatario b{display:block;color:var(--ink);font-size:10pt}
+
+  .occhiello{font-size:10.5pt;line-height:1.55;color:var(--ink2);max-width:34em;margin-bottom:18px}
+
+  /* ---------- struttura ---------- */
+  h2{font-family:var(--serif);font-size:15.5pt;font-weight:400;margin:0 0 7px;
+     padding-top:9px;border-top:1px solid var(--hair)}
+  h2:first-of-type{border-top:none;padding-top:0}
+  h3{font-size:9pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--dim);margin:12px 0 5px}
+  p{margin-bottom:7px;max-width:36em}
+  ul{margin:0 0 10px 16px} li{margin-bottom:5px;max-width:35em}
+  strong{font-weight:650}
+  .sezione{break-inside:avoid;margin-bottom:12px}
+
+  /* ---------- il link ---------- */
+  .linkbox{background:var(--ink);color:#fff;border-radius:9px;padding:14px 18px;margin:5px 0 11px}
+  .linkbox .et{font-size:8pt;font-weight:700;letter-spacing:.2em;text-transform:uppercase;opacity:.65}
+  .linkbox .url{font-family:"SF Mono",Consolas,monospace;font-size:12.5pt;margin-top:7px;word-break:break-all}
+
+  /* ---------- passi ---------- */
+  .passi{display:flex;gap:11px;margin:12px 0 4px}
+  .passo{flex:1;border:1px solid var(--hair);border-radius:8px;padding:11px 12px;background:var(--panno)}
+  .passo .n{font-family:var(--serif);font-size:20pt;line-height:1;color:var(--dim)}
+  .passo .t{font-weight:650;margin:5px 0 3px;font-size:10pt}
+  .passo .d{font-size:9pt;color:var(--ink2);line-height:1.45}
+
+  /* ---------- due strade ---------- */
+  .strade{display:flex;gap:13px;margin:10px 0}
+  .strada{flex:1;border:1px solid var(--hair);border-radius:8px;padding:13px 14px}
+  .strada.consigliata{border-color:var(--verde);border-width:1.5px;background:#F2F8F4}
+  .strada .cap{font-size:8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+  .strada.consigliata .cap{color:var(--verde)}
+  .strada h4{font-size:11.5pt;font-weight:650;margin:5px 0 7px}
+  .strada p{font-size:9.5pt;margin-bottom:6px;color:var(--ink2)}
+
+  /* ---------- profili ---------- */
+  table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:9.5pt}
+  th{text-align:left;font-size:8pt;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+     color:var(--dim);border-bottom:1px solid var(--hair);padding:0 8px 6px 0}
+  td{padding:5px 8px 5px 0;border-bottom:1px solid var(--hair);vertical-align:top;color:var(--ink2)}
+  td:first-child{width:22%}
+  td.nome{font-weight:700}
+  .r{color:var(--rosso)} .g{color:var(--giallo)} .v{color:var(--verde)} .b{color:var(--blu)}
+
+  /* ---------- avvisi ---------- */
+  .nota{border-left:3px solid var(--hair);padding:2px 0 2px 14px;margin:10px 0;
+        font-size:9.5pt;color:var(--ink2)}
+  .nota.attenzione{border-left-color:var(--giallo)}
+  .nota b{color:var(--ink)}
+
+  .piede{margin-top:14px;padding-top:7px;border-top:1px solid var(--hair);
+         font-size:8pt;color:var(--dim);display:flex;justify-content:space-between}
+
+  .pagina2,.pagina3{break-before:page;padding-top:4px}
+</style>
+</head>
+<body>
+
+<div class="testata">
+  <div>
+    <div class="marchio">Manuale operativo</div>
+    <h1>Sales Killer Test</h1>
+  </div>
+  <div class="destinatario">
+    per<br><b>Rocco Resta</b>
+    Sales manager
+  </div>
+</div>
+
+<p class="occhiello">
+  Un test di venti situazioni reali di vendita che fotografa <strong>come comunica</strong> ogni
+  venditore sotto pressione. In cinque minuti restituisce il profilo dominante fra Rosso, Giallo,
+  Verde e Blu, con la guida su come gestirlo e il piano di lavoro per farlo chiudere di più.
+  Questo foglio spiega cosa devi fare tu, e nient'altro.
+</p>
+
+<div class="sezione">
+  <h2>Il link da mandare ai venditori</h2>
+  <div class="linkbox">
+    <div class="et">Da inoltrare su WhatsApp</div>
+    <div class="url">saleskillertest.github.io/sales-killer-test</div>
+  </div>
+  <p>
+    Si apre in qualunque browser, telefono o computer. Nessuna app da installare, nessuna
+    registrazione, nessun login. Il venditore scrive solo il proprio nome.
+  </p>
+</div>
+
+<div class="sezione">
+  <h2>Come funziona</h2>
+  <div class="passi">
+    <div class="passo">
+      <div class="n">01</div>
+      <div class="t">Il venditore compila</div>
+      <div class="d">Venti scenari: chiamata a freddo, obiezione sul prezzo, silenzi, chiusura. Risponde d'istinto, cinque minuti.</div>
+    </div>
+    <div class="passo">
+      <div class="n">02</div>
+      <div class="t">Vede subito il suo profilo</div>
+      <div class="d">Profilo dominante, mix percentuale dei quattro colori, analisi del suo stile e piano d'azione.</div>
+    </div>
+    <div class="passo">
+      <div class="n">03</div>
+      <div class="t">Il risultato arriva a te</div>
+      <div class="d">La riga finisce da sola sul foglio Google. In più il venditore può mandartelo su WhatsApp o via email.</div>
+    </div>
+  </div>
+  <p style="margin-top:11px">
+    Il passaggio 3 <strong>avviene da solo</strong>: anche se il venditore chiude la pagina senza
+    premere niente, il risultato è già registrato.
+  </p>
+</div>
+
+<div class="sezione">
+  <h2>Cosa devi fare tu</h2>
+  <p>Due strade, e puoi usarle insieme.</p>
+
+  <div class="strade">
+    <div class="strada consigliata">
+      <div class="cap">Consigliata</div>
+      <h4>Aspetta il messaggio WhatsApp</h4>
+      <p>A fine test il venditore trova un pulsante <strong>Invia su WhatsApp</strong> che apre
+      già la chat con te, con dentro il report completo: profilo, mix, tutte le risposte e il
+      piano d'azione. Deve solo premere invio.</p>
+      <p><strong>Se lo fa dal telefono, digli di usare quello.</strong> Da mobile si apre
+      direttamente l'app WhatsApp: è la strada più rapida e la meno soggetta a errori.</p>
+    </div>
+    <div class="strada">
+      <div class="cap">Sempre disponibile</div>
+      <h4>Apri il foglio Google</h4>
+      <p>Tutti i risultati sono lì, anche quelli di chi non ti ha scritto. È la fonte di verità:
+      se il messaggio non arriva, il dato c'è comunque.</p>
+      <p>Ti conviene tenerlo come quadro d'insieme della squadra, più che come notifica.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="piede"><span>Sales Killer Test — manuale operativo</span><span>per Rocco Resta</span></div>
+
+<!-- ======================= PAGINA 2 ======================= -->
+<div class="pagina2">
+
+<div class="sezione">
+  <h2>Una cosa da fare una volta sola</h2>
+  <p>Apri il foglio dal tuo account Google e vai su <strong>Strumenti &rarr; Impostazioni di
+  notifica &rarr; «Qualsiasi modifica» &rarr; «Email, subito»</strong>. Da quel momento ricevi
+  una email a ogni test completato.</p>
+  <p>&Egrave; una preferenza personale legata al tuo account: nessun altro pu&ograve; attivarla
+  al posto tuo, nemmeno chi ha creato il foglio.</p>
+</div>
+
+<div class="sezione">
+  <h2>Come si legge il foglio</h2>
+  <p>Due schede in fondo alla finestra.</p>
+
+  <h3>Riepilogo — la squadra a colpo d'occhio</h3>
+  <p>Quanti test completati, quanti venditori per ciascun profilo con la relativa quota, e la
+  media del mix sulla squadra. Si aggiorna da solo. Serve a capire se hai una squadra
+  sbilanciata: cinque Rossi chiudono ma bruciano, cinque Verdi curano ma non chiudono.</p>
+
+  <h3>Risultati — una riga per venditore</h3>
+  <table>
+    <tr><th>Colonna</th><th>Cosa contiene</th></tr>
+    <tr><td class="nome">Data</td><td>quando ha completato il test</td></tr>
+    <tr><td class="nome">Nome</td><td>come si è firmato</td></tr>
+    <tr><td class="nome">Profilo</td><td>il colore dominante, colorato per tipo</td></tr>
+    <tr><td class="nome">Rosso · Giallo · Verde · Blu</td><td>le quattro percentuali, con barra proporzionale. Sono numeri veri: puoi ordinare la colonna per trovare, per esempio, chi ha più Rosso in squadra</td></tr>
+    <tr><td class="nome">Risposte</td><td>tutte e venti, con la scelta fatta</td></tr>
+    <tr><td class="nome">Report</td><td>il testo completo che ha visto il venditore</td></tr>
+  </table>
+  <p style="margin-top:9px">Le ultime due colonne contengono molto testo su una riga sola, per non
+  gonfiare il foglio. Per leggerne una: <strong>clicca la cella</strong> e leggi nella barra in alto.</p>
+</div>
+
+<div class="sezione">
+  <h2>I quattro profili, in una riga</h2>
+  <table>
+    <tr><th>Profilo</th><th>Come vende</th><th>Dove si inceppa</th></tr>
+    <tr>
+      <td class="nome r">Rosso · Dominante</td>
+      <td>va dritto al punto, ritmo alto, chiede l'ordine senza esitare</td>
+      <td>ascolta poco, mette pressione, brucia trattative ancora vive</td>
+    </tr>
+    <tr>
+      <td class="nome g">Giallo · Espressivo</td>
+      <td>crea sintonia in due minuti, racconta storie, trascina</td>
+      <td>ottimo clima ma niente chiusura; trascura follow-up e CRM</td>
+    </tr>
+    <tr>
+      <td class="nome v">Verde · Cooperativo</td>
+      <td>ascolta davvero, costruisce fiducia che dura, i clienti restano</td>
+      <td>evita la pressione, rimanda la richiesta d'ordine, sconta troppo</td>
+    </tr>
+    <tr>
+      <td class="nome b">Blu · Analitico</td>
+      <td>preparato e credibile, risponde con dati e prove</td>
+      <td>si perde nei dettagli, aspetta la trattativa «perfetta» che non arriva</td>
+    </tr>
+  </table>
+  <p style="margin-top:9px">Nel report che riceve ogni venditore trovi anche la sezione
+  <strong>Guida per il sales manager</strong>: come comunicargli, come motivarlo, come
+  correggerlo. È scritta per te, non per lui.</p>
+</div>
+
+</div>
+<div class="pagina3">
+<div class="sezione">
+  <h2>Se qualcosa non torna</h2>
+  <ul>
+    <li><strong>Un venditore dice di aver finito ma non lo vedi sul foglio.</strong> Ricarica la
+    pagina del foglio. Se ancora manca, fagli rifare il test: dura cinque minuti.</li>
+    <li><strong>Non ricevi le email.</strong> Vuol dire che la notifica del punto precedente non è
+    attiva sul tuo account. Rifai quel passaggio.</li>
+    <li><strong>Il messaggio WhatsApp arriva tagliato.</strong> Il report è lungo. Il dato completo
+    è comunque sul foglio, sempre.</li>
+    <li><strong>Il link non si apre.</strong> Controlla che sia scritto per intero: alcuni programmi
+    spezzano gli indirizzi lunghi. Meglio inoltrarlo che riscriverlo a mano.</li>
+  </ul>
+</div>
+
+<div class="sezione">
+  <h2>Chi tocca cosa</h2>
+  <p>Tu non devi manutenere niente. Il questionario è una pagina pubblica, il foglio è tuo e di
+  Alessandro, e il collegamento fra i due gira da solo. Il foglio è in <strong>sola lettura</strong>
+  per chiunque abbia il link: nessuno può cancellare i risultati per sbaglio.</p>
+  <p>Se serve cambiare le domande, i testi dei report o l'indirizzo a cui arrivano i messaggi,
+  è una modifica al codice: parla con Alessandro.</p>
+</div>
+
+<div class="piede"><span>Sales Killer Test — manuale operativo</span><span>per Rocco Resta</span></div>
+
+</div>
+</body>
+</html>

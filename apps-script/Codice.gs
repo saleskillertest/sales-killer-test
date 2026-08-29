@@ -9,7 +9,7 @@
 // Impostazioni di notifica, e ognuno imposta le proprie.
 
 var COLONNE   = ["Data", "Nome", "Profilo", "Rosso", "Giallo", "Verde", "Blu", "Risposte", "Report"];
-var LARGHEZZE = [130, 200, 180, 75, 75, 75, 75, 300, 300];
+var LARGHEZZE = [115, 155, 150, 62, 62, 62, 62, 175, 175];
 var RIGHE_PREFORMATTATE = 500;
 var NOME_DATI = "Risultati";
 
@@ -23,22 +23,22 @@ var TINTE = {
 // ---------------------------------------------------------------- manutenzione
 
 // Prima funzione del file: e' quella preselezionata nel menu Esegui.
-// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
-function reimpostaFoglio() {
-  var ss = SpreadsheetApp.getActive();
-  var sh = foglioDati();
-  sh.clear();
-  preparaFoglio(sh);
-  costruisciRiepilogo(ss, sh.getName());
-}
-
-// Riformatta senza toccare i dati gia' presenti.
+// Riformatta il foglio senza toccare i dati.
 function sistemaAspetto() {
   var ss = SpreadsheetApp.getActive();
   var sh = foglioDati();
   intestazione(sh);
   formattaRighe(sh, 2, Math.max(RIGHE_PREFORMATTATE, sh.getLastRow()));
   regoleColore(sh);
+  costruisciRiepilogo(ss, sh.getName());
+}
+
+// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
+function reimpostaFoglio() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = foglioDati();
+  sh.clear();
+  preparaFoglio(sh);
   costruisciRiepilogo(ss, sh.getName());
 }
 
@@ -128,7 +128,7 @@ function intestazione(sh) {
 
   sh.setRowHeight(1, 38);
   sh.setFrozenRows(1);
-  sh.setFrozenColumns(3);
+  sh.setFrozenColumns(0);
 
   for (var i = 0; i < LARGHEZZE.length; i++) sh.setColumnWidth(i + 1, LARGHEZZE[i]);
 
