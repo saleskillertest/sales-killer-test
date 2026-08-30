@@ -136,7 +136,9 @@ function intestazione(sh) {
 
   for (var i = 0; i < LARGHEZZE.length; i++) sh.setColumnWidth(i + 1, LARGHEZZE[i]);
 
-  // colonne oltre l'ultima: fuori strada, si nascondono
+  // Prima riapro tutto: se in passato il foglio aveva meno colonne, quelle
+  // in mezzo erano rimaste nascoste e le risposte sparivano dalla vista.
+  sh.showColumns(1, sh.getMaxColumns());
   var extra = sh.getMaxColumns() - COLONNE.length;
   if (extra > 0) sh.hideColumns(COLONNE.length + 1, extra);
 

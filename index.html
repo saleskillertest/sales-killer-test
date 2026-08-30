@@ -150,10 +150,8 @@
 <body>
 <script>
   const WHATSAPP = "393515242162";
-  // I pulsanti manuali scrivono SOLO a Rocco: la mail parte dalla casella del venditore,
-  // quindi qualsiasi altro destinatario sarebbe visibile a lui. La copia ad Alessandro
-  // arriva dall'invio automatico (Apps Script), in Ccn, dove resta invisibile.
-  const EMAIL_TO = "roccorestapro@gmail.com";
+  // Un solo canale manuale: WhatsApp. I risultati arrivano comunque sul foglio
+  // da soli, quindi l'email era un doppione che confondeva e basta.
   // Incolla qui l'URL dello script Google (vedi ISTRUZIONI-DASHBOARD.md).
   // Finché è vuoto, l'invio automatico è disattivato e restano i pulsanti manuali.
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbwjTeyc-UQvn-CH7_WeyKCxui4VXeE2mlP7C3Odn_0Sewp1l9qIVtbUd6f15_TVCezHpA/exec";
@@ -292,7 +290,7 @@ const REPORTS={
    manager:"Comunicagli con fatti, non con slogan motivazionali: vuole capire il perché delle richieste. Dagli tempo di preparazione e dati di qualità; feedback specifico e documentato, mai generico. Non forzarlo a improvvisare in pubblico. Fissagli scadenze decisionali esplicite, perché la sua tendenza è rimandare in nome dell'analisi. Incentivi: obiettivi chiari e misurabili, con regole del gioco trasparenti.",
    piano:"Obiettivo: passare dall'analisi all'azione. 1) Regola dei 3 benefici: ogni presentazione parte da tre benefici in linguaggio semplice, i dettagli tecnici solo se richiesti. 2) Deadline di chiusura: ogni trattativa ha una data entro cui chiedere l'ordine, anche con informazioni incomplete. L'80% di preparazione basta. 3) Call to action obbligatoria: nessuna chiamata o email si chiude senza un prossimo passo con data. 4) Allenare l'urgenza: dare al cliente una ragione vera per decidere ora. 5) Accettare il rifiuto come dato: un no veloce vale più di un forse eterno."}};
 
-let step=-1, userName="", unlocked=false, sentVia='';
+let step=-1, userName="", unlocked=false;
 const answers=new Array(QUESTIONS.length).fill(null);
 const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,n:q.n,o};});
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
@@ -340,12 +338,11 @@ function renderGate(){
   app.innerHTML=`<div class="gate fade">
     <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
     <h2>Il tuo profilo è pronto.</h2>
-    <p>Per sbloccare il risultato completo, invia il test compilato. Scegli come: ricevi subito a schermo il profilo con analisi, guida per il manager e piano d'azione.</p>
+    <p>Mandalo al tuo responsabile su WhatsApp e sblocca il risultato: profilo, analisi del tuo stile e piano d'azione, subito qui a schermo.</p>
     <div class="gatebtns">
-      <button class="gbtn gwa" onclick="unlock('wa')">Invia su WhatsApp e sblocca</button>
-      <button class="gbtn gmail" onclick="unlock('mail')">Invia via email e sblocca</button>
+      <button class="gbtn gwa" onclick="unlock()">Invia su WhatsApp e sblocca</button>
     </div>
-    <p class="gnote">Vengono inviati il test completo con tutte le tue risposte e il report finale.</p>
+    <p class="gnote">Si apre WhatsApp con il messaggio già scritto: contiene le tue risposte e il report completo. Devi solo premere invio.</p>
   </div>`;
   window.scrollTo({top:0});
 }
@@ -355,12 +352,8 @@ function openLink(href){
   a.href=href; a.target='_blank'; a.rel='noopener';
   document.body.appendChild(a); a.click(); a.remove();
 }
-function linkFor(via){
-  const payload=fullReport(), subj='Sales Killer Test - '+userName;
-  if(via==='wa')   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(payload)}`;
-  if(via==='mail') // compositore Gmail: si apre nel browser, non serve un'app di posta
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(EMAIL_TO)}&su=${encodeURIComponent(subj)}&body=${encodeURIComponent(payload)}`;
-  return `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(payload)}`; // 'app'
+function linkWhatsApp(){
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(fullReport())}`;
 }
 let autoSent=false;
 // le domande neutre servono al sales manager per tarare la mentalita':
@@ -408,25 +401,24 @@ function mark(ok){
     : 'Invio automatico non riuscito: usa i pulsanti qui sotto.';
 }
 let sending=false;
-function send(via){
+function send(){
   if(sending) return;               // evita doppie aperture
   sending=true; setTimeout(()=>{sending=false},1200);
-  const href=linkFor(via);
+  const href=linkWhatsApp();
   let w=null;
   try{ w=window.open(href,'_blank','noopener'); }catch(e){}
   if(!w){ try{ openLink(href); }catch(_){} }   // se il popup è bloccato
-  markSend(via);
+  markSend();
 }
-function markSend(via){                        // descrive solo ciò che è realmente accaduto
+function markSend(){                           // descrive solo ciò che è realmente accaduto
   const el=document.getElementById('sendstat');
   if(!el) return;
-  const dove = via==='wa' ? 'WhatsApp' : (via==='app' ? 'il tuo programma di posta' : 'il messaggio email');
-  el.innerHTML = `Si è aperto ${dove} con il report già compilato: controlla e premi invio per completare l'invio. Se non si è aperto niente, usa <b>Copia il report</b> e incolla il testo in un messaggio.`;
+  el.innerHTML = `Si è aperto WhatsApp con il report già scritto: controlla e premi invio. Se non si è aperto niente, usa <b>Copia il report</b> e incollalo in un messaggio.`;
 }
-function unlock(via){
-  unlocked=true; sentVia=via; renderReport();   // il report appare comunque
-  autoSave();                                   // registrazione automatica
-  send(via);
+function unlock(){
+  unlocked=true; renderReport();   // il report appare comunque
+  autoSave();                      // registrazione automatica
+  send();
 }
 function copyReport(btn){
   const t=fullReport();
@@ -459,10 +451,8 @@ function renderReport(){
     <div class="sect"><h3>03 / PIANO D'AZIONE</h3><p>${R.piano}</p></div>
     <div class="printonly pfoot">Ogni invio contiene il test completo: risposte date e report finale.</div>
     <div class="acts">
+      <button class="abtn wa" onclick="send()">Invia su WhatsApp</button>
       <button class="abtn pdf" onclick="window.print()">Scarica il report in PDF</button>
-      <button class="abtn wa" onclick="send('wa')">Invia su WhatsApp</button>
-      <button class="abtn mail" onclick="send('mail')">Invia via email (Gmail)</button>
-      <button class="abtn" onclick="send('app')">Invia con la mia app di posta</button>
       <button class="abtn" onclick="copyReport(this)">Copia il report</button>
     </div>
     <div class="sent"><span id="autostat">Invio del risultato in corso…</span><br><br><span id="sendstat"></span></div>
