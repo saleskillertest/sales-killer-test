@@ -8,8 +8,8 @@
 // blocked". Le notifiche si impostano sul foglio, da Strumenti >
 // Impostazioni di notifica, e ognuno imposta le proprie.
 
-var COLONNE   = ["Data", "Nome", "Profilo", "Rosso", "Giallo", "Verde", "Blu", "Risposte", "Report"];
-var LARGHEZZE = [115, 155, 150, 62, 62, 62, 62, 175, 175];
+var COLONNE   = ["Data", "Nome", "Profilo", "Rosso", "Giallo", "Verde", "Blu", "Milione", "Premio", "Risposte", "Report"];
+var LARGHEZZE = [105, 135, 140, 50, 50, 50, 50, 140, 130, 110, 110];
 var RIGHE_PREFORMATTATE = 500;
 var NOME_DATI = "Risultati";
 
@@ -22,6 +22,15 @@ var TINTE = {
 
 // ---------------------------------------------------------------- manutenzione
 
+// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
+function reimpostaFoglio() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = foglioDati();
+  sh.clear();
+  preparaFoglio(sh);
+  costruisciRiepilogo(ss, sh.getName());
+}
+
 // Prima funzione del file: e' quella preselezionata nel menu Esegui.
 // Riformatta il foglio senza toccare i dati.
 function sistemaAspetto() {
@@ -30,15 +39,6 @@ function sistemaAspetto() {
   intestazione(sh);
   formattaRighe(sh, 2, Math.max(RIGHE_PREFORMATTATE, sh.getLastRow()));
   regoleColore(sh);
-  costruisciRiepilogo(ss, sh.getName());
-}
-
-// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
-function reimpostaFoglio() {
-  var ss = SpreadsheetApp.getActive();
-  var sh = foglioDati();
-  sh.clear();
-  preparaFoglio(sh);
   costruisciRiepilogo(ss, sh.getName());
 }
 
@@ -74,11 +74,15 @@ function registra(p) {
   if (sh.getLastRow() === 0) preparaFoglio(sh);
 
   var q = percentuali(p.mix || "");
+  var neutre = String(p.extra || "").split(" ||| ");
+  neutre[0] = neutre[0] || "";
+  neutre[1] = neutre[1] || "";
   sh.appendRow([
     new Date(),
     p.nome || "",
     p.profilo || "",
     q.ROSSO, q.GIALLO, q.VERDE, q.BLU,
+    neutre[0], neutre[1],
     unaRiga(p.risposte),
     unaRiga(p.report)
   ]);
@@ -150,6 +154,7 @@ function formattaRighe(sh, prima, quante) {
 
   sh.getRange(prima, 1, quante, 1).setNumberFormat("dd/MM/yyyy  HH:mm");
   sh.getRange(prima, 4, quante, 4).setNumberFormat("0%").setHorizontalAlignment("center");
+  sh.getRange(prima, 8, quante, 2).setFontSize(9);
   sh.getRange(prima, 3, quante, 1).setFontWeight("bold");
   sh.getRange(prima, 2, quante, 1).setFontWeight("bold");
 
