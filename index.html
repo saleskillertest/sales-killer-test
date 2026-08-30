@@ -296,9 +296,11 @@ const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 const COLORATE=QUESTIONS.filter(q=>!q.n).length;   // le domande che fanno punteggio
-function counts(){const c={R:0,G:0,V:0,B:0};answers.forEach(a=>{if(a&&c.hasOwnProperty(a))c[a]++});return c}
+function scelta(i){const a=answers[i];return a==null?null:shuffled[i].o[a];}   // l'opzione premuta
+function codice(i){const o=scelta(i);return o?o.c:null;}
+function counts(){const c={R:0,G:0,V:0,B:0};answers.forEach((a,i)=>{const k=codice(i);if(k&&c.hasOwnProperty(k))c[k]++});return c}
 function ranking(){const c=counts(),t=COLORATE;const a=Object.keys(c).map(k=>({k,n:c[k],p:Math.round(c[k]/t*100)}));a.sort((x,y)=>y.n-x.n);return a}
-function updateBar(){const c=counts(),d=answers.filter(Boolean).length,t=QUESTIONS.length;
+function updateBar(){const c=counts(),d=answers.filter(a=>a!=null).length,t=QUESTIONS.length;
   cbar.innerHTML=`<i class="cb-r" style="flex:${c.R}"></i><i class="cb-g" style="flex:${c.G}"></i><i class="cb-v" style="flex:${c.V}"></i><i class="cb-b" style="flex:${c.B}"></i><i class="cb-rest" style="flex:${t-d}"></i>`}
 
 function render(){
@@ -327,11 +329,11 @@ function render(){
   app.innerHTML=`<div class="fade">
     <div class="qhead"><span class="qnum">${String(step+1).padStart(2,'0')}</span><span class="qtot">di ${QUESTIONS.length}</span></div>
     <h2>${esc(q.q)}</h2>
-    <div class="opts">${q.o.map(o=>`<button type="button" class="opt ${answers[step]===o.c?'sel':''}" data-c="${o.c}" onclick="choose(this)">${esc(o.t)}</button>`).join('')}</div>
+    <div class="opts">${q.o.map((o,idx)=>`<button type="button" class="opt ${answers[step]===idx?'sel':''}" data-i="${idx}" onclick="choose(this)">${esc(o.t)}</button>`).join('')}</div>
     <p class="err" id="err">Scegli una risposta per continuare.</p></div>`;
   window.scrollTo({top:0});
 }
-function choose(el){answers[step]=el.dataset.c;document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');updateBar();setTimeout(()=>{step++;render()},170)}
+function choose(el){answers[step]=Number(el.dataset.i);document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');updateBar();setTimeout(()=>{step++;render()},170)}
 
 function renderGate(){
   nav.style.display='none';
@@ -361,7 +363,7 @@ let autoSent=false;
 function estratteNeutre(){
   return shuffled.map((q,i)=>{
     if(!q.n) return null;
-    const c=answers[i], o=c?q.o.find(x=>x.c===c):null;
+    const o=scelta(i);
     return o?o.t:"";
   }).filter(x=>x!==null).join(" ||| ");
 }
@@ -372,7 +374,7 @@ function payload(){
     nome:userName,
     profilo:`${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
     mix:rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | '),
-    risposte:shuffled.map((q,i)=>{const c=answers[i],o=c?q.o.find(x=>x.c===c):null;
+    risposte:shuffled.map((q,i)=>{const o=scelta(i),c=codice(i);
       return `${i+1}. ${q.q} -> ${c&&COLORS[c]?`[${COLORS[c].name}] `:""}${o?o.t:"(nessuna risposta)"}`}).join("\n"),
     report:fullReport(),
     extra:estratteNeutre()
@@ -467,8 +469,8 @@ function fullReport(){
     `Mix: ${rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | ')}`,"",
     "RISPOSTE DATE","--------------------"];
   shuffled.forEach((q,i)=>{
-    const c=answers[i];
-    const opt=c?q.o.find(o=>o.c===c):null;
+    const opt=scelta(i);
+    const c=codice(i);
     L.push(`${i+1}. ${q.q}`);
     L.push(c&&opt?`   -> ${COLORS[c]?`[${COLORS[c].name}] `:""}${opt.t}`:`   -> (nessuna risposta)`);
   });
@@ -487,7 +489,7 @@ next.onclick=()=>{
     userName=f?f.value.trim():'';
     if(!userName){showErr();return}
     step=0;render();return}
-  if(!answers[step]){showErr();return}
+  if(answers[step]==null){showErr();return}
   step++;render();
 };
 back.onclick=()=>{
