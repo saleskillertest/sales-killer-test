@@ -22,15 +22,6 @@ var TINTE = {
 
 // ---------------------------------------------------------------- manutenzione
 
-// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
-function reimpostaFoglio() {
-  var ss = SpreadsheetApp.getActive();
-  var sh = foglioDati();
-  sh.clear();
-  preparaFoglio(sh);
-  costruisciRiepilogo(ss, sh.getName());
-}
-
 // Prima funzione del file: e' quella preselezionata nel menu Esegui.
 // Riformatta il foglio senza toccare i dati.
 function sistemaAspetto() {
@@ -39,6 +30,15 @@ function sistemaAspetto() {
   intestazione(sh);
   formattaRighe(sh, 2, Math.max(RIGHE_PREFORMATTATE, sh.getLastRow()));
   regoleColore(sh);
+  costruisciRiepilogo(ss, sh.getName());
+}
+
+// ATTENZIONE: cancella tutti i dati e ricostruisce foglio e riepilogo.
+function reimpostaFoglio() {
+  var ss = SpreadsheetApp.getActive();
+  var sh = foglioDati();
+  sh.clear();
+  preparaFoglio(sh);
   costruisciRiepilogo(ss, sh.getName());
 }
 

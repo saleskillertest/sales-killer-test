@@ -1,7 +1,7 @@
 # Sales Killer Test — come è montato
 
 ```
-venditore apre il link   ->  compila 20 domande  ->  la pagina invia i dati
+venditore apre il link   ->  compila 22 domande  ->  la pagina invia i dati
 GitHub Pages                                          al web app Apps Script
                                                               |
                                                               v
