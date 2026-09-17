@@ -5,12 +5,13 @@
 //
 // NIENTE invio email da qui: il permesso 'script.send_mail' e' classificato
 // sensibile da Google e su un'app non verificata fa scattare "This app is
-// blocked". Le notifiche si impostano sul foglio, da Strumenti >
-// Impostazioni di notifica, e ognuno imposta le proprie.
+// blocked". L'email a Rocco parte dalla pagina, via FormSubmit.
 
-var COLONNE   = ["Data", "Nome", "Profilo", "Rosso", "Giallo", "Verde", "Blu", "Milione", "Premio", "Risposte", "Report"];
-var LARGHEZZE = [105, 135, 140, 50, 50, 50, 50, 140, 130, 110, 110];
+var COLONNE   = ["Data", "Nome", "Email", "Telefono", "Profilo", "Rosso", "Giallo", "Verde", "Blu", "Milione", "Premio", "Risposte", "Report"];
+var LARGHEZZE = [105, 135, 175, 115, 140, 50, 50, 50, 50, 140, 130, 110, 110];
 var RIGHE_PREFORMATTATE = 500;
+// posizione (1 = A) delle colonne a cui serve un trattamento speciale
+var COL_PROFILO = 5, COL_ROSSO = 6, COL_NEUTRE = 10;
 var NOME_DATI = "Risultati";
 
 var TINTE = {
@@ -24,6 +25,18 @@ var TINTE = {
 
 // Prima funzione del file: e' quella preselezionata nel menu Esegui.
 // Riformatta il foglio senza toccare i dati.
+// Una tantum (settembre 2026): il test ora chiede anche email e telefono.
+// Inserisce le due colonne dopo Nome, spostando i dati gia' presenti, e
+// rimette a posto intestazione, formati e riepilogo. Eseguirla due volte
+// aggiungerebbe altre colonne vuote: si lancia una volta sola.
+function aggiungiColonneContatto() {
+  var sh = foglioDati();
+  if (sh.getRange(1, 3).getValue() === "Email") return "gia' fatto";
+  sh.insertColumnsAfter(2, 2);
+  sistemaAspetto();
+  return "colonne Email e Telefono aggiunte";
+}
+
 function sistemaAspetto() {
   var ss = SpreadsheetApp.getActive();
   var sh = foglioDati();
@@ -80,6 +93,8 @@ function registra(p) {
   sh.appendRow([
     new Date(),
     p.nome || "",
+    p.email || "",
+    p.telefono || "",
     p.profilo || "",
     q.ROSSO, q.GIALLO, q.VERDE, q.BLU,
     neutre[0], neutre[1],
@@ -155,9 +170,9 @@ function formattaRighe(sh, prima, quante) {
   r.setWrapStrategy(SpreadsheetApp.WrapStrategy.CLIP);
 
   sh.getRange(prima, 1, quante, 1).setNumberFormat("dd/MM/yyyy  HH:mm");
-  sh.getRange(prima, 4, quante, 4).setNumberFormat("0%").setHorizontalAlignment("center");
-  sh.getRange(prima, 8, quante, 2).setFontSize(9);
-  sh.getRange(prima, 3, quante, 1).setFontWeight("bold");
+  sh.getRange(prima, COL_ROSSO, quante, 4).setNumberFormat("0%").setHorizontalAlignment("center");
+  sh.getRange(prima, COL_NEUTRE, quante, 2).setFontSize(9);
+  sh.getRange(prima, COL_PROFILO, quante, 1).setFontWeight("bold");
   sh.getRange(prima, 2, quante, 1).setFontWeight("bold");
 
   for (var i = 0; i < quante; i++) sh.setRowHeight(prima + i, 26);
@@ -165,7 +180,7 @@ function formattaRighe(sh, prima, quante) {
 
 function regoleColore(sh) {
   var righe = Math.max(RIGHE_PREFORMATTATE, sh.getLastRow());
-  var profilo = sh.getRange(2, 3, righe, 1);
+  var profilo = sh.getRange(2, COL_PROFILO, righe, 1);
   var regole = [];
 
   Object.keys(TINTE).forEach(function (nome) {
@@ -186,7 +201,7 @@ function regoleColore(sh) {
       SpreadsheetApp.newConditionalFormatRule()
         .setGradientMaxpointWithValue(colori[c], SpreadsheetApp.InterpolationType.NUMBER, "0.5")
         .setGradientMinpointWithValue("#FFFFFF", SpreadsheetApp.InterpolationType.NUMBER, "0")
-        .setRanges([sh.getRange(2, 4 + c, righe, 1)])
+        .setRanges([sh.getRange(2, COL_ROSSO + c, righe, 1)])
         .build()
     );
   }
@@ -217,7 +232,7 @@ function costruisciRiepilogo(ss, nomeDati) {
     var r = 5 + i;
     sh.getRange(r, 1).setValue(etichette[i])
       .setBackground(TINTE[nomi[i]].sfondo).setFontColor(TINTE[nomi[i]].testo).setFontWeight("bold");
-    sh.getRange(r, 2).setFormula('=COUNTIF(' + d + '!C2:C,"*' + nomi[i] + '*")')
+    sh.getRange(r, 2).setFormula('=COUNTIF(' + d + '!E2:E,"*' + nomi[i] + '*")')
       .setHorizontalAlignment("center");
     sh.getRange(r, 3).setFormula('=IFERROR(B' + r + '/COUNTA(' + d + '!B2:B),0)')
       .setNumberFormat("0%").setHorizontalAlignment("center");
@@ -227,7 +242,7 @@ function costruisciRiepilogo(ss, nomeDati) {
     .setFontWeight("bold").setFontColor("#12140F");
   sh.getRange("A11:B11").setValues([["Colore", "Media"]])
     .setBackground("#12140F").setFontColor("#F4F5F0").setFontWeight("bold");
-  var col = ["D", "E", "F", "G"];
+  var col = ["F", "G", "H", "I"];
   for (var j = 0; j < 4; j++) {
     var rr = 12 + j;
     sh.getRange(rr, 1).setValue(etichette[j])
@@ -247,7 +262,7 @@ function costruisciRiepilogo(ss, nomeDati) {
 // Scrive una riga finta, per provare il giro senza compilare il test.
 function provaInvio() {
   registra({
-    nome: "PROVA", profilo: "ROSSO (Dominante)",
+    nome: "PROVA", email: "prova@esempio.it", telefono: "3330000000", profilo: "ROSSO (Dominante)",
     mix: "ROSSO 50% | BLU 30% | VERDE 10% | GIALLO 10%",
     risposte: "1. domanda -> [ROSSO] risposta", report: "Riga di prova."
   });

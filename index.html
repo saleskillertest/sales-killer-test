@@ -68,9 +68,12 @@
   .opt.sel::before{background:var(--txt)}
   .opt:focus-visible{outline:2px solid var(--txt);outline-offset:2px}
 
-  input[type=text]{width:100%;font:inherit;font-size:17px;padding:16px 18px;border:1px solid var(--edge);border-radius:13px;background:var(--panel);color:var(--txt);outline:none;margin-top:30px;transition:border-color .16s}
+  input[type=text],input[type=email],input[type=tel]{width:100%;font:inherit;font-size:17px;padding:16px 18px;border:1px solid var(--edge);border-radius:13px;background:var(--panel);color:var(--txt);outline:none;margin-top:30px;transition:border-color .16s}
   input::placeholder{color:#666C60}
   input:focus{border-color:var(--txt)}
+  .campi input{margin-top:12px}
+  .campi input:first-child{margin-top:30px}
+  .privacy{color:var(--dim);font-size:13px;margin-top:14px;line-height:1.5}
 
   .nav{position:relative;background:transparent;padding:4px 22px 40px;display:flex;justify-content:center;z-index:1}
   .navin{width:100%;max-width:640px;display:flex;gap:10px}
@@ -241,7 +244,7 @@ const REPORTS={
    manager:"Comunicagli con fatti, non con slogan motivazionali: vuole capire il perché delle richieste. Dagli tempo di preparazione e dati di qualità; feedback specifico e documentato, mai generico. Non forzarlo a improvvisare in pubblico. Fissagli scadenze decisionali esplicite, perché la sua tendenza è rimandare in nome dell'analisi. Incentivi: obiettivi chiari e misurabili, con regole del gioco trasparenti.",
    piano:"Obiettivo: passare dall'analisi all'azione. 1) Regola dei 3 benefici: ogni presentazione parte da tre benefici in linguaggio semplice, i dettagli tecnici solo se richiesti. 2) Deadline di chiusura: ogni trattativa ha una data entro cui chiedere l'ordine, anche con informazioni incomplete. L'80% di preparazione basta. 3) Call to action obbligatoria: nessuna chiamata o email si chiude senza un prossimo passo con data. 4) Allenare l'urgenza: dare al cliente una ragione vera per decidere ora. 5) Accettare il rifiuto come dato: un no veloce vale più di un forse eterno."}};
 
-let step=-1, userName="", inviato=false;
+let step=-1, userName="", userMail="", userTel="", inviato=false;
 const answers=new Array(QUESTIONS.length).fill(null);
 const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,n:q.n,o};});
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
@@ -270,8 +273,13 @@ function render(){
         <div class="stat"><b>4</b><span>stili</span></div>
         <div class="stat"><b>5'</b><span>durata</span></div>
       </div>
-      <input type="text" id="uname" placeholder="Nome e cognome" value="${esc(userName)}">
-      <p class="err" id="err">Scrivi il tuo nome per iniziare.</p></div>`;
+      <div class="campi">
+        <input type="text" id="uname" placeholder="Nome e cognome" value="${esc(userName)}" autocomplete="name">
+        <input type="email" id="umail" placeholder="Email" value="${esc(userMail)}" autocomplete="email" inputmode="email">
+        <input type="tel" id="utel" placeholder="Telefono" value="${esc(userTel)}" autocomplete="tel" inputmode="tel">
+      </div>
+      <p class="err" id="err">Compila nome, email e telefono per iniziare.</p>
+      <p class="privacy">Servono al tuo responsabile per darti il riscontro sul test. Niente altro.</p></div>`;
     return;
   }
   if(step===QUESTIONS.length){ inviato?renderGrazie():renderInvio(); return; }
@@ -327,6 +335,8 @@ function payload(){
   const rk=ranking(), dom=rk[0];
   return {
     nome:userName,
+    email:userMail,
+    telefono:userTel,
     profilo:`${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
     mix:rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | '),
     risposte:shuffled.map((q,i)=>{const o=scelta(i),c=codice(i);
@@ -369,6 +379,9 @@ function inviaEmail(){
       _subject:`Sales Killer Test — ${p.nome} — ${p.profilo}`,
       _template:'box',
       Venditore:p.nome,
+      Email:p.email,
+      Telefono:p.telefono,
+      _replyto:p.email,
       Profilo:p.profilo,
       Mix:p.mix,
       'Domanda del milione':neutre[0]||'',
@@ -384,6 +397,7 @@ function inviaEmail(){
 function fullReport(){
   const rk=ranking(),dom=rk[0],R=REPORTS[dom.k];
   const L=["SALES KILLER TEST","--------------------",`Venditore: ${userName}`,
+    `Email: ${userMail}`,`Telefono: ${userTel}`,
     `Profilo dominante: ${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
     `Mix: ${rk.map(r=>`${COLORS[r.k].name} ${r.p}%`).join(' | ')}`,"",
     "RISPOSTE DATE","--------------------"];
@@ -404,9 +418,17 @@ function showErr(){const e=document.getElementById('err'); if(e) e.style.display
 next.onclick=()=>{
   if(step>=QUESTIONS.length) return;              // sulla schermata finale il tasto non fa nulla
   if(step===-1){
-    const f=document.getElementById('uname');
+    const f=document.getElementById('uname'), m=document.getElementById('umail'), t=document.getElementById('utel');
     userName=f?f.value.trim():'';
-    if(!userName){showErr();return}
+    userMail=m?m.value.trim():'';
+    userTel=t?t.value.trim():'';
+    // controlli minimi: una chiocciola con un punto dopo, e almeno 8 cifre
+    const mailOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(userMail);
+    const telOk=(userTel.match(/\d/g)||[]).length>=8;
+    if(!userName||!mailOk||!telOk){
+      const e=document.getElementById('err');
+      if(e) e.textContent=!userName?'Scrivi il tuo nome per iniziare.':(!mailOk?'Controlla l\'email: serve per il riscontro.':'Scrivi un numero di telefono valido.');
+      showErr();return}
     step=0;render();return}
   if(answers[step]==null){showErr();return}
   step++;render();
