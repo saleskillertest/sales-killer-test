@@ -61,8 +61,9 @@ Al suo posto ci sono le notifiche native del foglio, che non chiedono permessi:
 Sono già attive su `alessandrobrozzi1@gmail.com`. **Rocco deve impostare la
 propria**, aprendo il foglio dal suo account e ripetendo quei passaggi.
 
-In più, i pulsanti del test (WhatsApp, Gmail, app di posta, PDF, copia) mandano
-il report integrale a Rocco, con un'azione del venditore.
+Il report integrale a Rocco arriva invece per email tramite FormSubmit, chiamato
+direttamente dalla pagina quando il venditore preme **Invia** (vedi `index.html`,
+`inviaEmail`). Il venditore non vede né il profilo né il report.
 
 ## Sicurezza
 

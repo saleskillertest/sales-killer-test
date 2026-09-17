@@ -9,14 +9,20 @@ sales manager e il piano d'azione.
 ## Come funziona
 
 `index.html` è una pagina statica autosufficiente: nessuna dipendenza, nessun
-build, nessun framework. A test completato invia i risultati in POST al web app
-Apps Script configurato in `ENDPOINT` (riga 159), che scrive una riga sul foglio.
+build, nessun framework. Il venditore non vede il proprio risultato: a fine test
+preme **Invia** e i dati partono in parallelo verso due canali:
+
+- il web app Apps Script in `ENDPOINT`, che scrive una riga sul foglio;
+- FormSubmit (`formsubmit.co/ajax/` + `EMAIL_ROCCO`), che manda a Rocco una email
+  con profilo, mix, domande neutre e report completo (guida per il manager inclusa).
+  Al primo invio FormSubmit chiede a Rocco di cliccare "Activate Form": finché non
+  lo fa, le email non arrivano (il foglio sì).
 
 - Foglio risultati: **TEST VENDITORI - ROCCO**
 - Endpoint: web app Apps Script, distribuzione pubblica, esegue come il
   proprietario del foglio. Già autorizzata e attiva.
-- Se `ENDPOINT` è vuoto l'invio automatico si disattiva e restano i pulsanti
-  manuali (WhatsApp, Gmail, PDF, copia negli appunti).
+- Basta che uno dei due canali risponda perché il test risulti inviato; se
+  falliscono entrambi il venditore vede "Riprova".
 
 ## Struttura
 

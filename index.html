@@ -6,13 +6,13 @@
 <title>Sales Killer Test</title>
 <meta name="theme-color" content="#171915">
 <meta property="og:title" content="Sales Killer Test">
-<meta property="og:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Scopri il tuo profilo comunicativo tra Rosso, Giallo, Verde e Blu, con analisi del tuo stile, guida per il sales manager e piano d'azione per chiudere di più. 5 minuti.">
+<meta property="og:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sales Killer Test">
-<meta name="twitter:description" content="22 situazioni reali di vendita. Scopri il tuo profilo tra Rosso, Giallo, Verde e Blu e come chiudere di più. 5 minuti.">
-<meta name="description" content="Test sullo stile di vendita basato sui 4 colori: 22 scenari reali di trattativa, profilo dominante, guida per il sales manager e piano d'azione formativo.">
+<meta name="twitter:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
+<meta name="description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
   :root{
@@ -31,6 +31,7 @@
   .cb-r{background:var(--rosso)} .cb-g{background:var(--giallo)}
   .cb-v{background:var(--verde)} .cb-b{background:var(--blu)}
   .cb-rest{background:var(--edge)}
+  .cb-done{background:var(--txt)}
   .wrap{display:flex;justify-content:center;padding:40px 22px 22px;position:relative;z-index:1}
   .card{width:100%;max-width:640px}
   .fade{animation:fade .35s cubic-bezier(.2,.8,.2,1)}
@@ -88,72 +89,22 @@
   .gatebtns{display:flex;flex-direction:column;gap:11px;margin-top:34px}
   .gbtn{display:flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-size:16.5px;font-weight:600;padding:18px;border-radius:13px;border:none;cursor:pointer;color:#fff;transition:filter .15s,transform .1s}
   .gbtn:hover{filter:brightness(1.08)} .gbtn:active{transform:scale(.99)}
-  .gwa{background:var(--verde)} .gmail{background:var(--blu)}
+  .gsend{background:var(--txt);color:var(--bg)}
+  .gback{background:transparent;color:var(--dim);border:1px solid var(--edge)}
+  .gbtn:disabled{opacity:.55;cursor:default;filter:none;transform:none}
+  .gate p b{color:var(--txt);font-weight:600}
   .gnote{font-size:13px;color:var(--dim);margin-top:22px;line-height:1.55;max-width:28em;margin-left:auto;margin-right:auto}
 
-  .dom{position:relative;border-radius:20px;padding:32px 26px;color:#fff;overflow:hidden}
-  .dom::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.10)}
-  .dom .l{font-size:11px;font-weight:600;letter-spacing:.2em;opacity:.9;position:relative}
-  .dom .n{font-family:var(--serif);font-size:clamp(38px,10vw,56px);font-weight:400;letter-spacing:-.02em;line-height:1;margin-top:12px;position:relative}
-  .dom .s{font-size:15px;margin-top:14px;opacity:.95;position:relative;line-height:1.5}
-  .mix{margin:26px 0 6px}
-  .mixrow{display:flex;align-items:center;gap:13px;margin-bottom:10px}
-  .mixrow .tag{width:60px;font-size:11px;font-weight:700;letter-spacing:.1em}
-  .mixrow .track{display:block;flex:1;height:10px;background:var(--edge);border-radius:5px;overflow:hidden}
-  .mixrow .fill{display:block;height:10px;min-width:3px;border-radius:5px;animation:grow .7s cubic-bezier(.2,.8,.2,1) backwards}
-  @keyframes grow{from{width:0!important}}
-  .mixrow .pct{width:44px;text-align:right;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
-  .sect{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:22px;margin-top:12px}
-  .sect h3{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--dim);margin-bottom:13px}
-  .sect p{font-size:15.5px;line-height:1.68}
-  .acts{display:flex;flex-direction:column;gap:9px;margin-top:22px}
-  .abtn{display:flex;align-items:center;justify-content:center;gap:9px;font:inherit;font-size:16px;font-weight:600;padding:16px;border-radius:13px;border:1px solid var(--edge);cursor:pointer;background:var(--panel2);color:var(--txt);transition:filter .15s,transform .1s}
-  .abtn:hover{filter:brightness(1.15)} .abtn:active{transform:scale(.99)}
-  .abtn.pdf{background:var(--txt);color:var(--bg);border-color:var(--txt)}
-  .abtn.wa{background:var(--verde);color:#fff;border-color:var(--verde)}
-  .abtn.mail{background:var(--blu);color:#fff;border-color:var(--blu)}
-  .printonly{display:none}
-  .sent{background:var(--panel);border:1px solid var(--edge);border-left:3px solid var(--verde);border-radius:13px;padding:17px 18px;font-size:14.5px;color:var(--dim);margin-top:20px;line-height:1.55}
-
-  /* ============ STAMPA / PDF ============ */
-  @media print{
-    @page{size:A4;margin:16mm 14mm}
-    body{background:#fff!important;color:#14161A!important;display:block}
-    body::before{display:none!important}
-    .colorbar,.nav,.acts,.sent,.gate{display:none!important}
-    .wrap{padding:0!important;display:block}
-    .card{max-width:none!important;padding:0!important}
-    .fade{animation:none!important}
-    .printonly{display:block!important}
-    .printonly.phead{display:flex!important}
-    .phead{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid #D8D4CC;padding-bottom:10px;margin-bottom:26px}
-    .phead .pl{font-size:10px;font-weight:700;letter-spacing:.22em;color:#6B7280}
-    .phead .pr{font-size:10px;font-weight:700;letter-spacing:.16em;border:1px solid #14161A;border-radius:4px;padding:7px 11px}
-    .dom{background:none!important;color:#14161A!important;padding:0!important;border-radius:0!important;margin-bottom:30px}
-    .dom::after{display:none!important}
-    .dom .l{color:#8A8F86!important;font-size:10px;letter-spacing:.22em;margin-bottom:14px}
-    .dom .n{font-family:var(--sans)!important;font-weight:800!important;font-size:52px!important;line-height:.95!important;color:#B9BDB4!important;letter-spacing:-.03em}
-    .dom .s{color:#6B7280!important;font-size:13.5px!important;margin-top:14px!important}
-    .mix{border:1px solid #D8D4CC;border-radius:8px;padding:20px 22px;margin:0 0 22px}
-    .mix::before{content:"LA TUA COMPOSIZIONE";display:block;font-size:11px;font-weight:800;letter-spacing:.14em;margin-bottom:16px;color:#14161A}
-    .mixrow{gap:0;margin-bottom:11px}
-    .mixrow .tag{width:auto;flex:1;font-size:12px;font-weight:800;letter-spacing:.1em}
-    .mixrow .track{display:none!important}
-    .mixrow .pct{width:auto;font-size:13.5px;font-weight:800;color:#14161A}
-    .sect{background:none!important;border:1px solid #D8D4CC!important;border-radius:8px!important;padding:20px 22px!important;margin-top:14px!important;break-inside:avoid}
-    .sect h3{color:#14161A!important;font-size:12px!important;font-weight:800!important;letter-spacing:.1em!important;margin-bottom:12px!important}
-    .sect p{color:#31343A!important;font-size:12.5px!important;line-height:1.7!important}
-    .pfoot{display:block;text-align:center;font-size:10.5px;color:#8A8F86;margin-top:20px}
-  }
 </style>
 </head>
 <body>
 <script>
-  const WHATSAPP = "393515242162";
-  // Un solo canale manuale: WhatsApp. I risultati arrivano comunque sul foglio
-  // da soli, quindi l'email era un doppione che confondeva e basta.
-  // Incolla qui l'URL dello script Google (vedi ISTRUZIONI-DASHBOARD.md).
-  // Finché è vuoto, l'invio automatico è disattivato e restano i pulsanti manuali.
+  // Dove arrivano i risultati. Il venditore non li vede mai.
+  // EMAIL_ROCCO: l'email parte da formsubmit.co. Al primo invio FormSubmit manda
+  // a questo indirizzo una mail "Activate Form": finché non si clicca, le email
+  // non arrivano (il foglio sì).
+  const EMAIL_ROCCO = "roccorestapro@gmail.com";
+  // ENDPOINT: web app Apps Script che scrive la riga sul foglio (apps-script/Codice.gs).
   const ENDPOINT = "https://script.google.com/macros/s/AKfycbwjTeyc-UQvn-CH7_WeyKCxui4VXeE2mlP7C3Odn_0Sewp1l9qIVtbUd6f15_TVCezHpA/exec";
 </script>
 <div class="colorbar" id="cbar"><i class="cb-rest" style="flex:1"></i></div>
@@ -290,7 +241,7 @@ const REPORTS={
    manager:"Comunicagli con fatti, non con slogan motivazionali: vuole capire il perché delle richieste. Dagli tempo di preparazione e dati di qualità; feedback specifico e documentato, mai generico. Non forzarlo a improvvisare in pubblico. Fissagli scadenze decisionali esplicite, perché la sua tendenza è rimandare in nome dell'analisi. Incentivi: obiettivi chiari e misurabili, con regole del gioco trasparenti.",
    piano:"Obiettivo: passare dall'analisi all'azione. 1) Regola dei 3 benefici: ogni presentazione parte da tre benefici in linguaggio semplice, i dettagli tecnici solo se richiesti. 2) Deadline di chiusura: ogni trattativa ha una data entro cui chiedere l'ordine, anche con informazioni incomplete. L'80% di preparazione basta. 3) Call to action obbligatoria: nessuna chiamata o email si chiude senza un prossimo passo con data. 4) Allenare l'urgenza: dare al cliente una ragione vera per decidere ora. 5) Accettare il rifiuto come dato: un no veloce vale più di un forse eterno."}};
 
-let step=-1, userName="", unlocked=false;
+let step=-1, userName="", inviato=false;
 const answers=new Array(QUESTIONS.length).fill(null);
 const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,n:q.n,o};});
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
@@ -300,8 +251,8 @@ function scelta(i){const a=answers[i];return a==null?null:shuffled[i].o[a];}   /
 function codice(i){const o=scelta(i);return o?o.c:null;}
 function counts(){const c={R:0,G:0,V:0,B:0};answers.forEach((a,i)=>{const k=codice(i);if(k&&c.hasOwnProperty(k))c[k]++});return c}
 function ranking(){const c=counts(),t=COLORATE;const a=Object.keys(c).map(k=>({k,n:c[k],p:Math.round(c[k]/t*100)}));a.sort((x,y)=>y.n-x.n);return a}
-function updateBar(){const c=counts(),d=answers.filter(a=>a!=null).length,t=QUESTIONS.length;
-  cbar.innerHTML=`<i class="cb-r" style="flex:${c.R}"></i><i class="cb-g" style="flex:${c.G}"></i><i class="cb-v" style="flex:${c.V}"></i><i class="cb-b" style="flex:${c.B}"></i><i class="cb-rest" style="flex:${t-d}"></i>`}
+function updateBar(){const d=answers.filter(a=>a!=null).length,t=QUESTIONS.length;
+  cbar.innerHTML=`<i class="cb-done" style="flex:${d}"></i><i class="cb-rest" style="flex:${t-d}"></i>`}
 
 function render(){
   if(step>QUESTIONS.length) step=QUESTIONS.length;   // niente indici fuori range
@@ -313,7 +264,7 @@ function render(){
     next.textContent='Inizia il test';
     app.innerHTML=`<div class="fade"><div class="eyebrow"><span class="dot"></span>Assessment comportamentale</div>
       <h1>Non vendi male.<br><span class="soft">Vendi a modo tuo.</span></h1>
-      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe.</p>
+      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe. Alla fine le tue risposte arrivano al tuo responsabile.</p>
       <div class="stats">
         <div class="stat"><b>22</b><span>scenari reali</span></div>
         <div class="stat"><b>4</b><span>stili</span></div>
@@ -323,9 +274,9 @@ function render(){
       <p class="err" id="err">Scrivi il tuo nome per iniziare.</p></div>`;
     return;
   }
-  if(step===QUESTIONS.length){ unlocked?renderReport():renderGate(); return; }
+  if(step===QUESTIONS.length){ inviato?renderGrazie():renderInvio(); return; }
   const q=shuffled[step];
-  next.textContent=step===QUESTIONS.length-1?'Vedi il risultato':'Avanti';
+  next.textContent=step===QUESTIONS.length-1?'Concludi':'Avanti';
   app.innerHTML=`<div class="fade">
     <div class="qhead"><span class="qnum">${String(step+1).padStart(2,'0')}</span><span class="qtot">di ${QUESTIONS.length}</span></div>
     <h2>${esc(q.q)}</h2>
@@ -335,29 +286,33 @@ function render(){
 }
 function choose(el){answers[step]=Number(el.dataset.i);document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');updateBar();setTimeout(()=>{step++;render()},170)}
 
-function renderGate(){
+function nomeProprio(){return esc(userName.split(/\s+/)[0]||userName);}
+
+function renderInvio(){
   nav.style.display='none';
   app.innerHTML=`<div class="gate fade">
     <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
-    <h2>Il tuo profilo è pronto.</h2>
-    <p>Mandalo al tuo responsabile su WhatsApp e sblocca il risultato: profilo, analisi del tuo stile e piano d'azione, subito qui a schermo.</p>
+    <h2>Hai finito, ${nomeProprio()}.</h2>
+    <p>Premi <b>Invia</b> per mandare le tue risposte al tuo responsabile. Sarà lui a darti un riscontro sul tuo stile e su cosa allenare.</p>
     <div class="gatebtns">
-      <button class="gbtn gwa" onclick="unlock()">Invia su WhatsApp e sblocca</button>
+      <button class="gbtn gsend" id="btnInvia" onclick="invia()">Invia</button>
+      <button class="gbtn gback" id="btnRivedi" onclick="step--;render()">Rivedi le risposte</button>
     </div>
-    <p class="gnote">Si apre WhatsApp con il messaggio già scritto: contiene le tue risposte e il report completo. Devi solo premere invio.</p>
+    <p class="gnote" id="inviostat" role="status"></p>
   </div>`;
   window.scrollTo({top:0});
 }
-function openLink(href){
-  // apre in una nuova scheda senza far navigare via la pagina del test
-  const a=document.createElement('a');
-  a.href=href; a.target='_blank'; a.rel='noopener';
-  document.body.appendChild(a); a.click(); a.remove();
+
+function renderGrazie(){
+  nav.style.display='none';
+  app.innerHTML=`<div class="gate fade">
+    <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
+    <h2>Test inviato.</h2>
+    <p>Grazie ${nomeProprio()}. Le tue risposte sono arrivate al tuo responsabile, che ti darà un riscontro. Puoi chiudere questa pagina.</p>
+  </div>`;
+  window.scrollTo({top:0});
 }
-function linkWhatsApp(){
-  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(fullReport())}`;
-}
-let autoSent=false;
+
 // le domande neutre servono al sales manager per tarare la mentalita':
 // le mandiamo anche separate, non solo dentro il testo delle risposte
 function estratteNeutre(){
@@ -380,86 +335,50 @@ function payload(){
     extra:estratteNeutre()
   };
 }
-function autoSave(){                       // invio automatico: foglio Google + email
-  if(autoSent) return;
-  autoSent=true;
-  // pagina servita dal web app di Apps Script: chiamata diretta, con esito reale
-  if(window.google && google.script && google.script.run){
-    google.script.run.withSuccessHandler(()=>mark(true)).withFailureHandler(()=>mark(false)).salvaRisultato(payload());
-    return;
-  }
-  // file aperto in locale: serve l'URL dello script
-  if(!ENDPOINT){ mark(null); return; }
-  fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(payload()).toString()})
-    .then(()=>mark(ENDPOINT?'inviato':false)).catch(()=>mark(false));
-}
-function mark(ok){
-  const el=document.getElementById('autostat');
-  if(!el) return;
-  if(ok===null){ el.textContent='Invia il tuo risultato con uno dei pulsanti qui sotto.'; return; }
-  if(ok==='inviato'){ el.textContent='Risultato inviato alla dashboard.'; return; }
-  el.textContent = ok
-    ? 'Risultato registrato sulla dashboard.'
-    : 'Invio automatico non riuscito: usa i pulsanti qui sotto.';
-}
-let sending=false;
-function send(){
-  if(sending) return;               // evita doppie aperture
-  sending=true; setTimeout(()=>{sending=false},1200);
-  const href=linkWhatsApp();
-  let w=null;
-  try{ w=window.open(href,'_blank','noopener'); }catch(e){}
-  if(!w){ try{ openLink(href); }catch(_){} }   // se il popup è bloccato
-  markSend();
-}
-function markSend(){                           // descrive solo ciò che è realmente accaduto
-  const el=document.getElementById('sendstat');
-  if(!el) return;
-  el.innerHTML = `Si è aperto WhatsApp con il report già scritto: controlla e premi invio. Se non si è aperto niente, usa <b>Copia il report</b> e incollalo in un messaggio.`;
-}
-function unlock(){
-  unlocked=true; renderReport();   // il report appare comunque
-  autoSave();                      // registrazione automatica
-  send();
-}
-function copyReport(btn){
-  const t=fullReport();
-  const done=()=>{btn.textContent='Report copiato';setTimeout(()=>btn.textContent='Copia il report',1800)};
-  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done).catch(()=>fallbackCopy(t,done))}
-  else fallbackCopy(t,done);
-}
-function fallbackCopy(t,done){
-  const ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
-  document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}ta.remove();
+// Due canali in parallelo: il foglio (sempre) e l'email a Rocco.
+// Basta che uno dei due parta per considerare il test consegnato.
+let inCorso=false;
+async function invia(){
+  if(inCorso||inviato) return;
+  inCorso=true;
+  const btn=document.getElementById('btnInvia'), riv=document.getElementById('btnRivedi'), stat=document.getElementById('inviostat');
+  btn.disabled=true; riv.disabled=true; btn.textContent='Invio in corso…'; stat.textContent='';
+  const [foglio,email]=await Promise.all([inviaFoglio(),inviaEmail()]);
+  inCorso=false;
+  if(foglio||email){ inviato=true; render(); return; }
+  btn.disabled=false; riv.disabled=false; btn.textContent='Riprova';
+  stat.textContent='Invio non riuscito: controlla la connessione e riprova.';
 }
 
-function renderReport(){
-  nav.style.display='none';
-  const rk=ranking(),dom=rk[0],sec=rk[1],D=COLORS[dom.k],S=COLORS[sec.k],R=REPORTS[dom.k];
-  const secLine=sec.p>=25?`Forte componente secondaria: ${S.name} (${sec.p}%).`:`Profilo nettamente definito.`;
-  app.innerHTML=`<div class="fade">
-    <div class="printonly phead"><span class="pl">ASSESSMENT COMPLETATO</span><span class="pr">REPORT PERSONALE</span></div>
-    <div class="dom" style="background:${D.hex}">
-      <div class="l">PROFILO DI ${esc(userName.toUpperCase())}</div>
-      <div class="n">PREDOMINANTE ${D.name}</div>
-      <div class="s">${D.tag} · ${dom.p}% · ${secLine}</div>
-    </div>
-    <div class="mix">${rk.map((r,i)=>`<div class="mixrow">
-      <span class="tag" style="color:${COLORS[r.k].hex}">${COLORS[r.k].name}</span>
-      <span class="track"><span class="fill" style="width:${r.p}%;background:${COLORS[r.k].hex};animation-delay:${i*.09}s"></span></span>
-      <span class="pct">${r.p}%</span></div>`).join('')}</div>
-    <div class="sect"><h3>01 / IL TUO STILE OGGI</h3><p>${R.stile}</p></div>
-    <div class="sect"><h3>02 / GUIDA PER IL MANAGER</h3><p>${R.manager}</p></div>
-    <div class="sect"><h3>03 / PIANO D'AZIONE</h3><p>${R.piano}</p></div>
-    <div class="printonly pfoot">Ogni invio contiene il test completo: risposte date e report finale.</div>
-    <div class="acts">
-      <button class="abtn wa" onclick="send()">Invia su WhatsApp</button>
-      <button class="abtn pdf" onclick="window.print()">Scarica il report in PDF</button>
-      <button class="abtn" onclick="copyReport(this)">Copia il report</button>
-    </div>
-    <div class="sent"><span id="autostat">Invio del risultato in corso…</span><br><br><span id="sendstat"></span></div>
-    </div>`;
-  window.scrollTo({top:0});
+function inviaFoglio(){
+  if(!ENDPOINT) return Promise.resolve(false);
+  // no-cors: la risposta non è leggibile, si sa solo che la richiesta è partita
+  return fetch(ENDPOINT,{method:'POST',mode:'no-cors',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams(payload()).toString()})
+    .then(()=>true).catch(()=>false);
+}
+
+function inviaEmail(){
+  if(!EMAIL_ROCCO) return Promise.resolve(false);
+  const p=payload(), neutre=p.extra.split(' ||| ');
+  return fetch('https://formsubmit.co/ajax/'+EMAIL_ROCCO,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({
+      _subject:`Sales Killer Test — ${p.nome} — ${p.profilo}`,
+      _template:'box',
+      Venditore:p.nome,
+      Profilo:p.profilo,
+      Mix:p.mix,
+      'Domanda del milione':neutre[0]||'',
+      'Domanda del premio':neutre[1]||'',
+      Report:p.report
+    })
+  })
+    .then(r=>r.json())
+    .then(j=>{ if(String(j.success)!=='true') console.warn('FormSubmit:',j.message); return String(j.success)==='true'; })
+    .catch(()=>false);
 }
 
 function fullReport(){
@@ -493,7 +412,7 @@ next.onclick=()=>{
   step++;render();
 };
 back.onclick=()=>{
-  if(step>=QUESTIONS.length && unlocked) return;   // dal report non si torna indietro
+  if(inviato) return;                              // dopo l'invio non si torna indietro
   if(step>-1){step--;render()}
 };
 render();
