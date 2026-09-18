@@ -74,6 +74,8 @@
   .campi input{margin-top:12px}
   .campi input:first-child{margin-top:30px}
   .privacy{color:var(--dim);font-size:13px;margin-top:14px;line-height:1.5}
+  .consenso{display:flex;gap:12px;align-items:flex-start;margin-top:18px;color:var(--dim);font-size:14px;line-height:1.5;cursor:pointer}
+  .consenso input{width:20px;height:20px;margin-top:1px;flex:0 0 auto;accent-color:var(--txt)}
 
   .nav{position:relative;background:transparent;padding:4px 22px 40px;display:flex;justify-content:center;z-index:1}
   .navin{width:100%;max-width:640px;display:flex;gap:10px}
@@ -244,7 +246,28 @@ const REPORTS={
    manager:"Comunicagli con fatti, non con slogan motivazionali: vuole capire il perché delle richieste. Dagli tempo di preparazione e dati di qualità; feedback specifico e documentato, mai generico. Non forzarlo a improvvisare in pubblico. Fissagli scadenze decisionali esplicite, perché la sua tendenza è rimandare in nome dell'analisi. Incentivi: obiettivi chiari e misurabili, con regole del gioco trasparenti.",
    piano:"Obiettivo: passare dall'analisi all'azione. 1) Regola dei 3 benefici: ogni presentazione parte da tre benefici in linguaggio semplice, i dettagli tecnici solo se richiesti. 2) Deadline di chiusura: ogni trattativa ha una data entro cui chiedere l'ordine, anche con informazioni incomplete. L'80% di preparazione basta. 3) Call to action obbligatoria: nessuna chiamata o email si chiude senza un prossimo passo con data. 4) Allenare l'urgenza: dare al cliente una ragione vera per decidere ora. 5) Accettare il rifiuto come dato: un no veloce vale più di un forse eterno."}};
 
-let step=-1, userName="", userMail="", userTel="", inviato=false;
+let step=-1, userName="", userMail="", userTel="", inviato=false, consenso=false;
+// Chi arriva dalla pubblicita' ha ?src=meta nel link dell'inserzione.
+const DA_PUBBLICITA = new URLSearchParams(location.search).get('src') === 'meta';
+// Pixel dell'account Eticavende ("100K - 1M BUSINESS TARGET").
+const PIXEL_ID = "1331943178920646";
+
+// Il pixel parte solo per chi arriva dalla pubblicita' e dopo il consenso.
+// Email e telefono vanno a Meta gia' cifrati dal pixel stesso (corrispondenza
+// avanzata): aiutano Meta a riconoscere chi completa e a cercarne di simili.
+function caricaPixel(){
+  if(!DA_PUBBLICITA || window.fbq) return;
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  let tel=userTel.replace(/\D/g,'');
+  if(tel && !tel.startsWith('39') && tel.length<=10) tel='39'+tel;
+  fbq('init', PIXEL_ID, {em:userMail.toLowerCase(), ph:tel});
+  fbq('track','PageView');
+}
+function segnalaLead(){ if(DA_PUBBLICITA && window.fbq) fbq('track','Lead'); }
 const answers=new Array(QUESTIONS.length).fill(null);
 const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,n:q.n,o};});
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
@@ -267,7 +290,7 @@ function render(){
     next.textContent='Inizia il test';
     app.innerHTML=`<div class="fade"><div class="eyebrow"><span class="dot"></span>Assessment comportamentale</div>
       <h1>Non vendi male.<br><span class="soft">Vendi a modo tuo.</span></h1>
-      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe. Alla fine le tue risposte arrivano al tuo responsabile.</p>
+      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe. ${DA_PUBBLICITA?"Alla fine ricevi un riscontro personale sul tuo stile di vendita da Rocco Resta.":"Alla fine le tue risposte arrivano al tuo responsabile."}</p>
       <div class="stats">
         <div class="stat"><b>22</b><span>scenari reali</span></div>
         <div class="stat"><b>4</b><span>stili</span></div>
@@ -279,7 +302,9 @@ function render(){
         <input type="tel" id="utel" placeholder="Telefono" value="${esc(userTel)}" autocomplete="tel" inputmode="tel">
       </div>
       <p class="err" id="err">Compila nome, email e telefono per iniziare.</p>
-      <p class="privacy">Servono al tuo responsabile per darti il riscontro sul test. Niente altro.</p></div>`;
+      ${DA_PUBBLICITA
+        ? `<label class="consenso"><input type="checkbox" id="ucons" ${consenso?'checked':''}><span>Acconsento a essere ricontattato da Rocco Resta per il riscontro sul test, e all'uso dei miei dati per misurare la pubblicità su Meta.</span></label>`
+        : `<p class="privacy">Servono al tuo responsabile per darti il riscontro sul test. Niente altro.</p>`}</div>`;
     return;
   }
   if(step===QUESTIONS.length){ inviato?renderGrazie():renderInvio(); return; }
@@ -301,7 +326,9 @@ function renderInvio(){
   app.innerHTML=`<div class="gate fade">
     <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
     <h2>Hai finito, ${nomeProprio()}.</h2>
-    <p>Premi <b>Invia</b> per mandare le tue risposte al tuo responsabile. Sarà lui a darti un riscontro sul tuo stile e su cosa allenare.</p>
+    <p>${DA_PUBBLICITA
+      ? "Premi <b>Invia</b>: le tue risposte arrivano a Rocco Resta, che ti ricontatta con il riscontro sul tuo stile e su cosa allenare."
+      : "Premi <b>Invia</b> per mandare le tue risposte al tuo responsabile. Sarà lui a darti un riscontro sul tuo stile e su cosa allenare."}</p>
     <div class="gatebtns">
       <button class="gbtn gsend" id="btnInvia" onclick="invia()">Invia</button>
       <button class="gbtn gback" id="btnRivedi" onclick="step--;render()">Rivedi le risposte</button>
@@ -316,7 +343,9 @@ function renderGrazie(){
   app.innerHTML=`<div class="gate fade">
     <div class="lockmix"><i style="background:var(--rosso)"></i><i style="background:var(--giallo)"></i><i style="background:var(--verde)"></i><i style="background:var(--blu)"></i></div>
     <h2>Test inviato.</h2>
-    <p>Grazie ${nomeProprio()}. Le tue risposte sono arrivate al tuo responsabile, che ti darà un riscontro. Puoi chiudere questa pagina.</p>
+    <p>Grazie ${nomeProprio()}. ${DA_PUBBLICITA
+      ? "Le tue risposte sono arrivate a Rocco Resta, che ti ricontatterà per il riscontro. Puoi chiudere questa pagina."
+      : "Le tue risposte sono arrivate al tuo responsabile, che ti darà un riscontro. Puoi chiudere questa pagina."}</p>
   </div>`;
   window.scrollTo({top:0});
 }
@@ -334,7 +363,7 @@ function estratteNeutre(){
 function payload(){
   const rk=ranking(), dom=rk[0];
   return {
-    nome:userName,
+    nome:DA_PUBBLICITA?`${userName} (da pubblicità)`:userName,
     email:userMail,
     telefono:userTel,
     profilo:`${COLORS[dom.k].name} (${COLORS[dom.k].tag})`,
@@ -355,7 +384,7 @@ async function invia(){
   btn.disabled=true; riv.disabled=true; btn.textContent='Invio in corso…'; stat.textContent='';
   const [foglio,email]=await Promise.all([inviaFoglio(),inviaEmail()]);
   inCorso=false;
-  if(foglio||email){ inviato=true; render(); return; }
+  if(foglio||email){ inviato=true; segnalaLead(); render(); return; }
   btn.disabled=false; riv.disabled=false; btn.textContent='Riprova';
   stat.textContent='Invio non riuscito: controlla la connessione e riprova.';
 }
@@ -376,7 +405,7 @@ function inviaEmail(){
     method:'POST',
     headers:{'Content-Type':'application/json','Accept':'application/json'},
     body:JSON.stringify({
-      _subject:`Sales Killer Test — ${p.nome} — ${p.profilo}`,
+      _subject:`Sales Killer Test — ${DA_PUBBLICITA?'NUOVO CONTATTO da pubblicità — '+userName:p.nome} — ${p.profilo}`,
       _template:'box',
       Venditore:p.nome,
       Email:p.email,
@@ -425,10 +454,14 @@ next.onclick=()=>{
     // controlli minimi: una chiocciola con un punto dopo, e almeno 8 cifre
     const mailOk=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(userMail);
     const telOk=(userTel.match(/\d/g)||[]).length>=8;
-    if(!userName||!mailOk||!telOk){
+    const c=document.getElementById('ucons');
+    consenso=c?c.checked:false;
+    const consOk=!DA_PUBBLICITA||consenso;
+    if(!userName||!mailOk||!telOk||!consOk){
       const e=document.getElementById('err');
-      if(e) e.textContent=!userName?'Scrivi il tuo nome per iniziare.':(!mailOk?'Controlla l\'email: serve per il riscontro.':'Scrivi un numero di telefono valido.');
+      if(e) e.textContent=!userName?'Scrivi il tuo nome per iniziare.':(!mailOk?'Controlla l\'email: serve per il riscontro.':(!telOk?'Scrivi un numero di telefono valido.':'Spunta il consenso per iniziare.'));
       showErr();return}
+    caricaPixel();
     step=0;render();return}
   if(answers[step]==null){showErr();return}
   step++;render();
