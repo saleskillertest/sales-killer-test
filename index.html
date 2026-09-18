@@ -6,13 +6,13 @@
 <title>Sales Killer Test</title>
 <meta name="theme-color" content="#171915">
 <meta property="og:title" content="Sales Killer Test">
-<meta property="og:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
+<meta property="og:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: alla fine ricevi un riscontro personale sul tuo stile di vendita.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sales Killer Test">
-<meta name="twitter:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
-<meta name="description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: le tue risposte arrivano al tuo responsabile.">
+<meta name="twitter:description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: alla fine ricevi un riscontro personale sul tuo stile di vendita.">
+<meta name="description" content="22 situazioni reali di vendita: chiamate a freddo, obiezioni sul prezzo, chiusure. Rispondi d'istinto, 5 minuti: alla fine ricevi un riscontro personale sul tuo stile di vendita.">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap');
   :root{
@@ -290,7 +290,7 @@ function render(){
     next.textContent='Inizia il test';
     app.innerHTML=`<div class="fade"><div class="eyebrow"><span class="dot"></span>Assessment comportamentale</div>
       <h1>Non vendi male.<br><span class="soft">Vendi a modo tuo.</span></h1>
-      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe. ${DA_PUBBLICITA?"Alla fine ricevi un riscontro personale sul tuo stile di vendita da Rocco Resta.":"Alla fine le tue risposte arrivano al tuo responsabile."}</p>
+      <p class="lede">Il test fotografa come reagisci quando la conversazione si fa vera: pressione, prezzo, silenzi e decisioni. Rispondi d'istinto, come fai davvero, non come si dovrebbe. Alla fine ricevi un riscontro personale sul tuo stile di vendita da Rocco Resta.</p>
       <div class="stats">
         <div class="stat"><b>22</b><span>scenari reali</span></div>
         <div class="stat"><b>4</b><span>stili</span></div>
@@ -304,7 +304,7 @@ function render(){
       <p class="err" id="err">Compila nome, email e telefono per iniziare.</p>
       ${DA_PUBBLICITA
         ? `<label class="consenso"><input type="checkbox" id="ucons" ${consenso?'checked':''}><span>Acconsento a essere ricontattato da Rocco Resta per il riscontro sul test, e all'uso dei miei dati per misurare la pubblicità su Meta.</span></label>`
-        : `<p class="privacy">Servono al tuo responsabile per darti il riscontro sul test. Niente altro.</p>`}</div>`;
+        : `<p class="privacy">Servono a Rocco Resta per mandarti il riscontro sul tuo stile di vendita.</p>`}</div>`;
     return;
   }
   if(step===QUESTIONS.length){ inviato?renderGrazie():renderInvio(); return; }
@@ -328,7 +328,7 @@ function renderInvio(){
     <h2>Hai finito, ${nomeProprio()}.</h2>
     <p>${DA_PUBBLICITA
       ? "Premi <b>Invia</b>: le tue risposte arrivano a Rocco Resta, che ti ricontatta con il riscontro sul tuo stile e su cosa allenare."
-      : "Premi <b>Invia</b> per mandare le tue risposte al tuo responsabile. Sarà lui a darti un riscontro sul tuo stile e su cosa allenare."}</p>
+      : "Premi <b>Invia</b>: le tue risposte arrivano a Rocco Resta, che ti darà un riscontro sul tuo stile e su cosa allenare."}</p>
     <div class="gatebtns">
       <button class="gbtn gsend" id="btnInvia" onclick="invia()">Invia</button>
       <button class="gbtn gback" id="btnRivedi" onclick="step--;render()">Rivedi le risposte</button>
@@ -345,7 +345,7 @@ function renderGrazie(){
     <h2>Test inviato.</h2>
     <p>Grazie ${nomeProprio()}. ${DA_PUBBLICITA
       ? "Le tue risposte sono arrivate a Rocco Resta, che ti ricontatterà per il riscontro. Puoi chiudere questa pagina."
-      : "Le tue risposte sono arrivate al tuo responsabile, che ti darà un riscontro. Puoi chiudere questa pagina."}</p>
+      : "Le tue risposte sono arrivate a Rocco Resta, che ti darà un riscontro. Puoi chiudere questa pagina."}</p>
   </div>`;
   window.scrollTo({top:0});
 }
