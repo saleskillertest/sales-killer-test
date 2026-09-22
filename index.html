@@ -267,7 +267,10 @@ function caricaPixel(){
   fbq('init', PIXEL_ID, {em:userMail.toLowerCase(), ph:tel});
   fbq('track','PageView');
 }
-function segnalaLead(){ if(DA_PUBBLICITA && window.fbq) fbq('track','Lead'); }
+// Non "Lead": su questo pixel Meta lo tiene in restrictedEventNames e lo
+// scarta senza dirlo (settembre 2026, nessun Lead arrivato su 2 test veri).
+// CompleteRegistration non e' ristretto ed e' quello su cui ottimizza la campagna.
+function segnalaLead(){ if(DA_PUBBLICITA && window.fbq) fbq('track','CompleteRegistration'); }
 const answers=new Array(QUESTIONS.length).fill(null);
 const shuffled=QUESTIONS.map(q=>{const o=[...q.o];for(let i=o.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[o[i],o[j]]=[o[j],o[i]];}return{q:q.q,n:q.n,o};});
 const app=document.getElementById('app'),next=document.getElementById('next'),back=document.getElementById('back'),cbar=document.getElementById('cbar'),nav=document.querySelector('.nav');
